@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Home, Profile, Reviews } from '../screens';
 import Colors from '../config/Colors';
+import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const MainTab = () => {
     return (
         <Tab.Navigator 
-            initialRouteName="Home"
+            initialRouteName="homeStack"
             tabBarOptions={{
                 showLabel: false,
                 activeTintColor: Colors.red,
@@ -30,8 +31,8 @@ const MainTab = () => {
                 }}
             />
             <Tab.Screen 
-                name="Home" 
-                component={Home} 
+                name="homeStack" 
+                component={HomeStack} 
                 options={{
                     tabBarIcon: ({ color, size}) => (
                         <Icon name="home" color={color} size={size}/>

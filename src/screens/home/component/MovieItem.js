@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native'
 import { s, vs, ms } from 'react-native-size-matters';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Colors from '../../../config/Colors';
@@ -8,12 +8,15 @@ import { Rating } from 'react-native-elements';
 
 
 const { width, height } = Dimensions.get('window');
-const MovieItem = ({Movie, genreName}) => {
+
+const MovieItem = ({Movie, genreName, getIdSelect}) => {
     const [ListRef, setListRef] = useState(null)
 
     const renderMovie = ({ item, index }) => (
         <View style={styles.itemContainer}>
-            <TouchableOpacity style={[
+            <TouchableOpacity 
+            onPress={()=>{getIdSelect(item.id)}}
+            style={[
                 { 
                     backgroundColor: 'white',
                     flex: 1,
@@ -46,9 +49,11 @@ const MovieItem = ({Movie, genreName}) => {
     );
     return (
         <View style={styles.movieContainer}>
-            <Text style={styles.title}>Hot {genreName} Movie</Text>
             <FlatList
-                showsHorizontalScrollIndicator={false}
+                ListHeaderComponent={
+                    <Text style={styles.title}>Hot {genreName} Movie</Text>
+                }
+                showsVerticalScrollIndicator={false}
                 data={Movie}
                 renderItem={renderMovie}
                 keyExtractor={item => item.id.toString()}
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     },
     title:{
         fontWeight : 'bold',
-        fontSize:20,
+        fontSize:18,
         color:Colors.black,
         paddingLeft:ms(7),
         paddingBottom:ms(6)

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity,Keyboard } from 'react-native'
 import axios from 'axios';
 import Colors from '../../config/Colors';
 import SearchBar from 'react-native-search-bar';
@@ -10,8 +10,8 @@ import MovieItem from './component/MovieItem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const Home = () => {
-    const [Movie, setMovie] = useState([])
+const Home = (props) => {
+    const [Movie, setMovie] = useState({})
     const [Genre, setGenre] = useState([])
     const [genreId, setgenreId] = useState(28)
     const [genreName, setgenreName] = useState('Action')
@@ -45,6 +45,10 @@ const Home = () => {
         setgenreId(id);
         setgenreName(name)
       } 
+    
+    const navigateToMovie = (id) => {
+        props.navigation.navigate('movie',id)
+    }
 
     return (
         <View style={styles.container}>
@@ -70,7 +74,7 @@ const Home = () => {
                 </View>
             </View>
             <GenreList genre={Genre} genreId={genreId} updateGenre={updateGenre}/>
-            <MovieItem Movie={Movie} genreName={genreName}/>
+            <MovieItem Movie={Movie} genreName={genreName} getIdSelect={navigateToMovie}/>
         </View>
     )
 }
@@ -81,7 +85,8 @@ const styles = StyleSheet.create({
         backgroundColor:Colors.lightGray,
     },
     top:{
-        padding:vs(12),
+        paddingHorizontal:ms(8),
+        paddingVertical:ms(12),
         backgroundColor:Colors.white,
         flexDirection:'row'
     },
@@ -89,8 +94,9 @@ const styles = StyleSheet.create({
         flex:1,
     },
     search:{
-        flex:7,
-        marginLeft:ms(15)
+        flex:6,
+        marginLeft:ms(10)
+
     },
     searchBar:{
         backgroundColor:Colors.lightGray,

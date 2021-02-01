@@ -24,7 +24,7 @@ export default function GenreList({genre, genreId, updateGenre}) {
   };
   return (
     <View style={styles.genreContainer}>
-        <Text style={styles.title}>Genre</Text>
+        {/* <Text style={styles.title}>Genre</Text> */}
         <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -40,11 +40,12 @@ export default function GenreList({genre, genreId, updateGenre}) {
 const styles = StyleSheet.create({
   genreContainer:{
     paddingTop:ms(6),
+    paddingBottom:ms(5)
   },
   title:{
     paddingLeft:ms(7),
     fontWeight : 'bold',
-    fontSize:20,
+    fontSize:18,
     color:Colors.black
   },
   listCon:{

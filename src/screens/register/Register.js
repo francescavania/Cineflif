@@ -28,14 +28,6 @@ const Register = (props) => {
         }
     }
 
-    // const clearState = () => {
-    //     setEmail('')
-    //     setPassword('')
-    //     setUsername('')
-    //     setName('')
-    //     setDisabled(true)
-    // };
-
     useEffect(() => {
         checkInput()
     }, [Email,Password,Name,Username])
