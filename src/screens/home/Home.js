@@ -38,7 +38,6 @@ const Home = () => {
     useEffect(() => {
         fetchData();
         fetchGenre();
-        console.log(Movie,"mov")
         
     }, [genreId])
 

@@ -1,14 +1,16 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { s, vs, ms } from 'react-native-size-matters';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Colors from '../../../config/Colors';
 import FastImage from 'react-native-fast-image'
+import { Rating } from 'react-native-elements';
 
 
 const { width, height } = Dimensions.get('window');
 const MovieItem = ({Movie, genreName}) => {
-    // let listViewRef
+    const [ListRef, setListRef] = useState(null)
+
     const renderMovie = ({ item, index }) => (
         <View style={styles.itemContainer}>
             <TouchableOpacity style={[
@@ -36,28 +38,22 @@ const MovieItem = ({Movie, genreName}) => {
                         }}
                     />
                 </View>
-                <Text numberOfLines={1}>{item.original_title}</Text>
+                <Text numberOfLines={1} style={styles.movieTitle}>{item.original_title}</Text>
+                <Text numberOfLines={1} style={styles.date}>{item.release_date}</Text>
+                {/* <Rating imageSize={20} readonly startingValue={item.vote_average/2} /> */}
             </TouchableOpacity>
         </View>
     );
-    // useEffect(() => {
-    //     listViewRef.scrollToOffset({
-    //         offset: 0,
-    //         animated: true
-    //       });
-    // }, [Movie])
     return (
         <View style={styles.movieContainer}>
-            <Text style={styles.movieTitle}>Hot {genreName} Movie</Text>
+            <Text style={styles.title}>Hot {genreName} Movie</Text>
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 data={Movie}
                 renderItem={renderMovie}
                 keyExtractor={item => item.id.toString()}
                 numColumns={2}
-                // ref={(ref) => {
-                //     listViewRef = ref;
-                //   }}
+                // ref={(ref) => { setListRef(ref) }}
             />
         </View>
     )
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
         // padding:width * 0.03,
         paddingTop:ms(6),
     },
-    movieTitle:{
+    title:{
         fontWeight : 'bold',
         fontSize:20,
         color:Colors.black,
@@ -79,20 +75,15 @@ const styles = StyleSheet.create({
     itemContainer:{
         width:width * 0.5,
     },
-    // itemContainer :{
-    //     // margin : 5,
-    //     // padding:5,
-    //     width:width * 0.5 ,
-    //     backgroundColor:'red',
-    //     // flex:1,
-    //     // justifyContent:'space-between'
-    // },
-    // movie:{
-    //     width : width * 0.4,
-    //     backgroundColor:'white',
-    //     // height : height * 0.4,
-        
-    // },
+    movieTitle:{
+        padding:ms(3)
+    },
+    date:{
+        fontSize:12,
+        paddingHorizontal:ms(3),
+        paddingBottom:ms(3),
+        color:Colors.darkGray
+    }
     
 })
 
