@@ -11,6 +11,7 @@ import { Rating } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 import { AirbnbRating } from 'react-native-elements';
 
+
 const Movie = (props) => {
 
     const {navigation, route} = props
@@ -140,7 +141,7 @@ const Movie = (props) => {
                     <View style={{backgroundColor:'white', marginTop:5,paddingBottom:10}}>
                         <View style={{paddingHorizontal:ms(10)}}>
                             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                <View>
+                                <View style={{maxWidth:wp(70)}}>
                                     <Text style={{color:Colors.black,fontSize:16,fontWeight:'bold',paddingBottom:ms(5),paddingTop:ms(10)}}>{MovieDetail.original_title}</Text>
                                     <View style={{paddingBottom:(5),alignItems:'flex-start'}}>
                                         <AirbnbRating
