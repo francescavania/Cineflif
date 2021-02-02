@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:Colors.lightGray,
+        // marginBottom:120
     },
     top:{
         paddingHorizontal:ms(8),
