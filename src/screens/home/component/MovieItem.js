@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     movieContainer:{
         // padding:width * 0.03,
         paddingTop:ms(6),
+        marginBottom:ms(100)
     },
     title:{
         fontWeight : 'bold',

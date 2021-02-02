@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { View, Text, ScrollView, ImageBackground, StyleSheet,Image, FlatList } from 'react-native'
+import { View, Text, ScrollView, ImageBackground, StyleSheet,Image, FlatList,TouchableOpacity } from 'react-native'
 import axios from 'axios';
 import FastImage from 'react-native-fast-image'
 import { s, vs, ms } from 'react-native-size-matters';
@@ -8,7 +8,7 @@ import Colors from '../../config/Colors';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { color } from 'react-native-reanimated';
 import { Rating } from 'react-native-elements';
-import Button from '../../components/Button';
+import { Button } from 'react-native-elements';
 import { AirbnbRating } from 'react-native-elements';
 
 const Movie = (props) => {
@@ -19,6 +19,8 @@ const Movie = (props) => {
     const [MovieReview, setMovieReview] = useState({})
 
     const [customStyleIndex, setCustomStyleIndex] = useState(0);
+    const [ReadMore,setReadMore]=useState(false);
+    // const [TotalReview, setTotalReview] = useState(0)
 
     async function fetchDetailMovies(){
         try {
@@ -43,7 +45,7 @@ const Movie = (props) => {
     useEffect(() => {
         fetchDetailMovies();
         fetchReview();
-        
+        // setTotalReview(MovieDetail.vote_count)
         // return () => {
         //     setMovieDetail({}); 
         //   };
@@ -78,7 +80,16 @@ const Movie = (props) => {
                     </View>
                 </View>
                 <View>
-                    <Text style={{paddingBottom:ms(10)}}>{item.content}</Text>
+                    <Text numberOfLines={3} style={{paddingBottom:ms(10)}}>{item.content}</Text>
+                    {/* {
+                        ReadMore ?
+                        <Text >{item.content}</Text>
+                        :
+                        <Text numberOfLines={2}>{item.content}</Text>
+                    }
+                    <TouchableOpacity onPress={()=>{setReadMore(!ReadMore)}}>
+                        <Text style={{fontSize:14,color:Colors.red}}>{ReadMore? 'Read Less.. ':'Read More.. '}</Text>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         </View>
@@ -108,7 +119,7 @@ const Movie = (props) => {
             </View>  
             <View>
                 <SegmentedControlTab
-                values={['Movie', 'Review']}
+                values={['Movie', 'Review' ]}
                 selectedIndex={customStyleIndex}
                 onTabPress={handleCustomIndexSelect}
                 borderRadius={0}
@@ -127,31 +138,40 @@ const Movie = (props) => {
                 />
                 {customStyleIndex === 0 && (
                     <View style={{backgroundColor:'white', marginTop:5,paddingBottom:10}}>
-                        <View>
-                            <Text style={{color:Colors.black,fontSize:16,padding:ms(10),fontWeight:'bold'}}>{MovieDetail.original_title}</Text>
-                        </View>
                         <View style={{paddingHorizontal:ms(10)}}>
                             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                <View style={{justifyContent:'center'}}>
-                                    {/* <Rating imageSize={20} readonly startingValue={MovieDetail.vote_average/2} /> */}
-                                </View>
                                 <View>
-                                    {/* <Button value='+' /> */}
+                                    <Text style={{color:Colors.black,fontSize:16,fontWeight:'bold',paddingBottom:ms(5),paddingTop:ms(10)}}>{MovieDetail.original_title}</Text>
+                                    <View style={{paddingBottom:(5),alignItems:'flex-start'}}>
+                                        <AirbnbRating
+                                            count={5}
+                                            defaultRating={MovieDetail.vote_average/2}
+                                            showRating={false}
+                                            size={15}
+                                            isDisabled={true}
+                                        />
+                                    </View>
                                 </View>
+                                <Button onPress={()=>console.log('pencet')} titleStyle={{fontSize:12}} buttonStyle={{borderRadius:5,margin:ms(10),backgroundColor: Colors.red}} title='Rate This'/>
                             </View>
                             <View>
-                                <Text>{MovieDetail.overview}</Text>
+                                <Text style={styles.movieInfo}>Released date : {MovieDetail.release_date}</Text>
+                                <Text style={styles.movieInfo}>Language : {MovieDetail.original_language}</Text>
+                                <Text style={styles.movieInfo}>Runtime : {MovieDetail.runtime} Minutes</Text>
+                                <Text style={{paddingTop:ms(5)}}>{MovieDetail.overview}</Text>
                             </View>
                         </View>
                         
                     </View>
                 )}
                 {customStyleIndex === 1 && (
-                    <FlatList
-                    data={MovieReview}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={renderReview}
-                    />
+                    <View style={{marginBottom:ms(130)}}>
+                        <FlatList
+                        data={MovieReview}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={renderReview}
+                        />
+                    </View>
                 )}
             </View>
         </View>
@@ -194,6 +214,9 @@ const styles = StyleSheet.create({
         color: '#444444',
         fontSize: 18,
         margin: 24,
+    },
+    movieInfo:{
+        color:Colors.darkGray
     }
 })
 
