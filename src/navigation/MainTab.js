@@ -20,6 +20,7 @@ const MainTab = () => {
                 inactiveTintColor: Colors.darkGray,
                 keyboardHidesTabBar: true
             }}
+            
         >
             <Tab.Screen 
                 name="Reviews" 
@@ -46,7 +47,7 @@ const MainTab = () => {
                     tabBarIcon: ({ color , size}) => (
                         <Icon name="people" color={color} size={size}/>
                     ),
-                    tabBarVisible:true,
+                    tabBarVisible:true,        
                 }}
                 
             />
