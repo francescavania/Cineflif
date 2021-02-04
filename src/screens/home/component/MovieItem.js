@@ -58,6 +58,7 @@ const MovieItem = ({Movie, genreName, getIdSelect}) => {
                 renderItem={renderMovie}
                 keyExtractor={item => item.id.toString()}
                 numColumns={2}
+                scrollsToTop={true}
                 // ref={(ref) => { setListRef(ref) }}
             />
         </View>

@@ -7,7 +7,8 @@ import Colors from '../config/Colors';
 export default function Button({
     value,
     onPress,
-    disabled = false
+    disabled = false,
+    backgroundColor = Colors.red
 }) {
 
     return (
@@ -16,7 +17,7 @@ export default function Button({
                 title={value}
                 titleStyle={{fontSize:16,fontWeight:'bold'}}
                 onPress={onPress}
-                buttonStyle={styles.button}
+                buttonStyle={[styles.button,{backgroundColor: backgroundColor}]}
                 disabled={disabled}
                 disabledStyle={{backgroundColor: Colors.lightRed}}
                 disabledTitleStyle={{fontSize:16,fontWeight:'bold',color:Colors.lightGray}}
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
         padding:10,
         paddingHorizontal:20,
-        backgroundColor: Colors.red,
+        
     }
 })
 
