@@ -2,14 +2,14 @@ const LOGIN = 'LOGIN'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 
 
-export const ActionLogin = (email, password) => {
+export const loginAction = (username, password) => {
     return {
         type: LOGIN ,
-        payload: {email, password},
+        payload: {username, password},
     };
 };
   
-export const LoginSuccess = (data) => {
+export const loginSuccess = (data) => {
     return {
         type: LOGIN_SUCCESS,
         payload: data,

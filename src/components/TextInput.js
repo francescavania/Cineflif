@@ -10,7 +10,9 @@ export default function TextInput({
     secured = false,
     onChangeText,
     numberOfLines=1,
-    multiline=false
+    multiline=false,
+    disabled,
+
 }) {
   const [name, setname] = useState(icon)
   return (
@@ -23,6 +25,7 @@ export default function TextInput({
         onChangeText={onChangeText}
         numberOfLines={numberOfLines}
         multiline={multiline}
+        disabled={disabled}
       />
     </View>
   );

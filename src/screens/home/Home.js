@@ -2,19 +2,20 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity,Keyboard } from 'react-native'
 import axios from 'axios';
 import Colors from '../../config/Colors';
-import SearchBar from 'react-native-search-bar';
+// import SearchBar from 'react-native-search-bar';
 import { s, vs, ms } from 'react-native-size-matters';
 import GenreList from './component/GenreList';
 import FastImage from 'react-native-fast-image'
 import MovieItem from './component/MovieItem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { ScrollView } from 'react-native-gesture-handler';
+import { SearchBar } from 'react-native-elements';
 
 const Home = (props) => {
     const [Movie, setMovie] = useState({})
     const [Genre, setGenre] = useState([])
     const [genreId, setgenreId] = useState(28)
     const [genreName, setgenreName] = useState('Action')
+    const [Search, setSearch] = useState('')
 
     async function fetchData(){
         try {
@@ -67,8 +68,11 @@ const Home = (props) => {
                 <View style={styles.search}>
                     <View style={styles.searchBar}>
                         <SearchBar
+                            containerStyle={{borderBottomWidth:0,borderTopWidth:0,backgroundColor:Colors.white,padding:0,}}
+                            inputContainerStyle={{backgroundColor:Colors.lightGray,borderRadius:10}}
                             placeholder="Search"
                             textColor='black'
+                            onChangeText={(Search) => setSearch(Search)}
                         />
                     </View>
                 </View>

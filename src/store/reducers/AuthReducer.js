@@ -1,17 +1,27 @@
 const intialState = {
     email: '',
-    user: null,
+    // user: null,
     password: '',
-    loading: false,
-    errorMessage: '',
+    // loading: false,
+    // errorMessage: '',
     token:'',
-    isLogged:false
+    // isLogged:false,
+    username:''
   };
 
-  export default (state = intialState , { type, payload }) => {
-    switch (type){
-
-        default:
+  const authReducer = (state = intialState , action) => {
+    console.log(action,"action reducer")
+    switch (action.type){
+      case 'LOGIN_SUCCESS':
+        return {
+          ...state,
+          token: action.response.data.data.token,
+        };
+      case 'LOGIN_ERROR':
+        return { ...state, payload };
+      default:
             return state;
     }
   }
+
+  export default authReducer

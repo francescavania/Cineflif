@@ -1,6 +1,6 @@
 import React from 'react'
 import { Platform, View, ActivityIndicator, Text } from 'react-native';
-import { Colors } from "~/style";
+import { Colors } from "../config/Colors";
 
 export default function Loading() {
     return (

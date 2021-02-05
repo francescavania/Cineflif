@@ -9,19 +9,25 @@ import {
     ScrollView, 
     TouchableWithoutFeedback } from 'react-native'
 import { s, vs, ms, mvs } from 'react-native-size-matters';
-import Button from '../../components/Button';
-import TextButton from '../../components/TextButton';
-import TextInput from '../../components/TextInput';
+import { Button, TextButton, TextInput } from "../../components";
+// import Button from '../../components/Button';
+// import TextButton from '../../components/TextButton';
+// import TextInput from '../../components/TextInput';
 import Colors from '../../config/Colors';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
+import { connect } from 'react-redux';
+// import  {loginAction}  from "../../store/actions/authAction";
+import { loginAction } from "../../store/actions/AuthAction";
+
+
 const Login = (props) => {
     const [Disabled, setDisabled] = useState(true);
-    const [Email, setEmail] = useState('');
+    const [Username, setUsername] = useState('');
     const [Password, setPassword] = useState('');
 
     const checkInput = () =>{
-        if(Email!='' && Password!=''){
+        if(Username!='' && Password!=''){
             setDisabled(false)
         }else{
             setDisabled(true)
@@ -29,14 +35,19 @@ const Login = (props) => {
     }
 
     const clearState = () => {
-        setEmail('')
+        setUsername('')
         setPassword('')
         setDisabled(true)
     };
 
     useEffect(() => {
         checkInput()
-    }, [Email,Password])
+    }, [Username,Password])
+
+    const handlerSignIn = () =>{
+        console.log(props)
+        props.loginAction(Username, Password);
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -47,7 +58,7 @@ const Login = (props) => {
                     />
                     </View>
                 <View style={styles.form} >
-                    <TextInput placeholder='Email' value={Email} icon='mail' onChangeText={(Email) => setEmail(Email)}/>
+                    <TextInput placeholder='Username' value={Username} icon='mail' onChangeText={(Username) => setUsername(Username)}/>
                     <TextInput placeholder='Password' value={Password} icon='lock' secured={true} onChangeText={(Password) => setPassword(Password)}/>
                     <View style={styles.forgot}>
                         <TextButton value='Forgot your password?' />
@@ -56,6 +67,7 @@ const Login = (props) => {
                         value='SIGN IN' 
                         onPress={()=>{
                             Keyboard.dismiss()
+                            handlerSignIn()
                         }} 
                         disabled={Disabled}/>
                     <View style={styles.row}>
@@ -70,6 +82,22 @@ const Login = (props) => {
         </TouchableWithoutFeedback>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        auth: 1
+        // Username: state.Login.Username,
+    };
+};
+  
+const mapDispachToProps = {
+    loginAction
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispachToProps
+)(Login);
 
 const styles = StyleSheet.create({
     container:{
@@ -99,5 +127,3 @@ const styles = StyleSheet.create({
     }
 })
 
-
-export default Login

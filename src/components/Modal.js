@@ -8,21 +8,32 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Colors from '../config/Colors';
 import { s, vs, ms } from 'react-native-size-matters';
 
-export default function Modal({onpress,visible=false,rating=5,onpressSubmit}) {
+export default function Modal({onpress,visible=false,rating=0,onpressSubmit}) {
   return (
     <View>
       <Overlay isVisible={visible} onBackdropPress={onpress}>
           <View>
-              <Text style={{alignSelf:'center',fontSize:18,paddingBottom:ms(10)}}>How do you think about this movie?</Text>
-              <AirbnbRating
+              <Text style={{alignSelf:'center',fontSize:18}}>How do you think about this movie?</Text>
+                <Rating showRating type='custom' imageSize={30} 
+                minValue={0} startingValue={rating}/>
+                {/* <AirbnbRating  
+                showRating={false}
+                count={5}
+                size={25}
+                defaultRating={rating}/> */}
+              {/* </View> */}
+              {/* <AirbnbRating
+                  type='custom'
+                  ratingBackgroundColor= {Colors.lightGray}
                   count={5}
                   defaultRating={rating}
                   showRating={false}
                   size={20}
                   isDisabled={false}
-              />
+              /> */}
               <View style={styles.container}>
                 <Textarea
+                placeholder={'Write here..'}
                   containerStyle={styles.textareaContainer}
                   style={styles.textarea}
                   underlineColorAndroid={'transparent'}
