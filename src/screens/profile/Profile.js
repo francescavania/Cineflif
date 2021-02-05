@@ -6,9 +6,11 @@ import Button from '../../components/Button';
 import { s, vs, ms } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-// import ImagePicker from 'react-native-image-picker';
+import { useSelector } from "react-redux";
+import Login from "../login/Login";
 
 const Profile = () => {
+    const token = useSelector(state => state.authReducer.token)
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
     const [Name, setName] = useState('');
@@ -36,6 +38,9 @@ const Profile = () => {
         });
       }
 
+    if(token === ''){
+        return <Login/>
+    }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

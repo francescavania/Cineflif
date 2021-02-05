@@ -10,18 +10,16 @@ import {
     TouchableWithoutFeedback } from 'react-native'
 import { s, vs, ms, mvs } from 'react-native-size-matters';
 import { Button, TextButton, TextInput } from "../../components";
-// import Button from '../../components/Button';
-// import TextButton from '../../components/TextButton';
-// import TextInput from '../../components/TextInput';
 import Colors from '../../config/Colors';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import { connect } from 'react-redux';
-// import  {loginAction}  from "../../store/actions/authAction";
+import { connect, useDispatch } from 'react-redux';
 import { loginAction } from "../../store/actions/AuthAction";
 
 
-const Login = (props) => {
+const Login = ({navigation}) => {
+    const dispatch = useDispatch()
+
     const [Disabled, setDisabled] = useState(true);
     const [Username, setUsername] = useState('');
     const [Password, setPassword] = useState('');
@@ -45,8 +43,10 @@ const Login = (props) => {
     }, [Username,Password])
 
     const handlerSignIn = () =>{
-        console.log(props)
-        props.loginAction(Username, Password);
+        // console.log(props)
+        // props.loginAction(Username, Password);
+        
+        dispatch(loginAction(Username, Password))
     }
 
     return (
@@ -74,7 +74,7 @@ const Login = (props) => {
                         <Text>Don't have an account? </Text>
                         <TextButton value='Sign Up' onPress={() => {
                             clearState()
-                            props.navigation.navigate('register')
+                            navigation.navigate('register')
                         }} />
                     </View>
                 </View>

@@ -7,8 +7,8 @@ import MainTab from './MainTab';
 const Navigation = () =>{
   return (
     <NavigationContainer>
-        <AuthStack/>
-        {/* <MainTab/> */}
+        {/* <AuthStack/> */}
+        <MainTab/>
     </NavigationContainer>
   )
 };

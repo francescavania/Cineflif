@@ -6,8 +6,13 @@ import { s, vs, ms } from 'react-native-size-matters';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image'
 import { AirbnbRating } from 'react-native-elements';
+import { useSelector } from "react-redux";
+import Login from "../login/Login";
 
 const Review = () => {
+    const token = useSelector(state => state.authReducer.token)
+    console.log(token,"token")
+
     const [Review, setReview] = useState([])
     const [lines, setLines] = useState(Array(Review.length).fill('hide'));
 
@@ -70,6 +75,10 @@ const Review = () => {
         </View>
     )
 
+    if(token === ''){
+        return <Login/>
+    }
+    
     return (
         <View style={styles.container}>
             <FlatList

@@ -3,7 +3,6 @@ import axios from 'axios';
 import {Alert} from 'react-native';
 import {takeLatest, put, all, call} from 'redux-saga/effects';
 
-import { loginUserService } from "../services/AuthService";
 import API,{endPoint} from "../Api";
 
 function* LoginSaga({payload}){

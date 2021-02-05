@@ -18,7 +18,7 @@ const intialState = {
           token: action.response.data.data.token,
         };
       case 'LOGIN_ERROR':
-        return { ...state, payload };
+        return { ...state, payload }; //masih gatau
       default:
             return state;
     }

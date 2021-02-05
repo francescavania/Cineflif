@@ -11,6 +11,8 @@ import { Rating } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 import { AirbnbRating } from 'react-native-elements';
 import Modal from '../../components/Modal';
+import { useSelector } from "react-redux";
+import Login from "../login/Login";
 
 
 const Movie = (props) => {
