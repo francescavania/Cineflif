@@ -8,9 +8,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { useSelector } from "react-redux";
 import Login from "../login/Login";
+import { connect } from 'react-redux';
+import { logoutAction } from "../../store/actions/AuthAction";
 
-const Profile = () => {
-    const token = useSelector(state => state.authReducer.token)
+const Profile = (props) => {
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
     const [Name, setName] = useState('');
@@ -38,9 +39,11 @@ const Profile = () => {
         });
       }
 
-    if(token === ''){
-        return <Login/>
+    const handleLogout = () =>{
+        props.logoutAction();
     }
+
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -53,12 +56,15 @@ const Profile = () => {
                         </TouchableOpacity> 
                     </View>
                     <View style={styles.form}>
-                        <TextInput value={Name} placeholder='Name' icon='people-alt'/>
+                        {/* <TextInput value={Name} placeholder='Name' icon='people-alt'/> */}
                         <TextInput value={Username} placeholder='Username' icon='people-alt'/>
                         <TextInput value={Email} placeholder='Email' icon='people-alt' disabled={true}/>
                         <TextInput value={Password} placeholder='Password' icon='lock'/>
-                        <Button value='SUBMIT' backgroundColor='blue' onPress={()=>Keyboard.dismiss()}/>
-                        <Button value='LOG OUT'/>
+                        <Button value='SUBMIT' backgroundColor='blue' onPress={()=>{
+                            Keyboard.dismiss()}}/>
+                        <Button value='LOG OUT' onPress={()=>{
+                            handleLogout()
+                            Keyboard.dismiss()}}/>
                     </View>
                 </View>
             </ScrollView>
@@ -84,4 +90,16 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Profile
+const mapStateToProps = (state) => ({
+    
+})
+
+const mapDispatchToProps = {
+    logoutAction
+}
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Profile);

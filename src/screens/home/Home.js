@@ -2,17 +2,19 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity,Keyboard } from 'react-native'
 import axios from 'axios';
 import Colors from '../../config/Colors';
-// import SearchBar from 'react-native-search-bar';
 import { s, vs, ms } from 'react-native-size-matters';
 import GenreList from './component/GenreList';
 import FastImage from 'react-native-fast-image'
 import MovieItem from './component/MovieItem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { SearchBar } from 'react-native-elements';
+import { ActionFetchGenre } from "../../store/actions/MovieAction";
+import { connect } from 'react-redux'
 
 const Home = (props) => {
+    console.log(props)
     const [Movie, setMovie] = useState({})
-    const [Genre, setGenre] = useState([])
+    // const [Genre, setGenre] = useState([])
     const [genreId, setgenreId] = useState(28)
     const [genreName, setgenreName] = useState('Action')
     const [Search, setSearch] = useState('')
@@ -37,8 +39,10 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-        fetchData();
-        fetchGenre();
+        props.ActionFetchGenre()
+        // console.log(props.Genre,"home genre")
+        // fetchData();
+        // fetchGenre();
         
     }, [genreId])
 
@@ -77,8 +81,8 @@ const Home = (props) => {
                     </View>
                 </View>
             </View>
-            <GenreList genre={Genre} genreId={genreId} updateGenre={updateGenre}/>
-            <MovieItem Movie={Movie} genreName={genreName} getIdSelect={navigateToMovie}/>
+            {/* <GenreList genre={props.Genre} genreId={genreId} updateGenre={updateGenre}/>
+            <MovieItem Movie={Movie} genreName={genreName} getIdSelect={navigateToMovie}/> */}
         </View>
     )
 }
@@ -110,4 +114,15 @@ const styles = StyleSheet.create({
     
 })
 
-export default Home
+const mapStateToProps = (state) => ({
+    Genre : state.movieReducer.genres
+})
+
+const mapDispatchToProps = {
+    ActionFetchGenre
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);

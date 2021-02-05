@@ -14,8 +14,13 @@ export default function Modal({onpress,visible=false,rating=0,onpressSubmit}) {
       <Overlay isVisible={visible} onBackdropPress={onpress}>
           <View>
               <Text style={{alignSelf:'center',fontSize:18}}>How do you think about this movie?</Text>
-                <Rating showRating type='custom' imageSize={30} 
-                minValue={0} startingValue={rating}/>
+                <Rating 
+                showRating 
+                type='custom' 
+                imageSize={30} 
+                minValue={0} 
+                startingValue={rating}
+                />
                 {/* <AirbnbRating  
                 showRating={false}
                 count={5}

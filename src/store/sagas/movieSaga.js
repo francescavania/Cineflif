@@ -1,14 +1,26 @@
-import axios from "axios";
-import { Alert } from "react-native";
-import { takeLatest,put,all, call } from "redux-saga/effects";
+import {takeLatest, put, all, call} from 'redux-saga/effects';
 
-function* fetchMovie(action) {
+import API,{endPoint} from "../Api";
+
+function* fetchGenre() {
     try {
+        const genres = yield API.get(endPoint.getAllGenres)
+        // yield console.log(genres,"genres")
+        yield put({type: "GENRE_FETCH_SUCCEEDED", genres:genres.data});
+    } catch (e) {
+        console.log(e)
+    }
+ }
 
-    //    const movie = yield call(Api, action.payload.token);
-    const movie = yield call()
+function* fetchMovie() {
+    try {
+        const movie = yield API.get(endPoint.getReviewByMovieId)
         yield put({type: "MOVIE_FETCH_SUCCEEDED", movie: movie});
     } catch (e) {
         console.log(e)
     }
  }
+
+export function* movieWatcher() {
+    yield all([takeLatest('GENRE_FETCH_REQUESTED', fetchGenre)]);
+}

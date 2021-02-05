@@ -12,16 +12,17 @@ import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 import TextButton from '../../components/TextButton';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { registerAction } from "../../store/actions/AuthAction";
+import { connect } from 'react-redux';
 
 const Register = (props) => {
     const [Disabled, setDisabled] = useState(true);
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
-    const [Name, setName] = useState('')
     const [Username, setUsername] = useState('')
 
     const checkInput = () =>{
-        if(Email!='' && Password!='' && Name!='' && Username!=''){
+        if(Email!='' && Password!='' && Username!=''){
             setDisabled(false)
         }else{
             setDisabled(true)
@@ -30,7 +31,11 @@ const Register = (props) => {
 
     useEffect(() => {
         checkInput()
-    }, [Email,Password,Name,Username])
+    }, [Email,Password,Username])
+
+    const handleRegister = () =>{
+        props.registerAction(Username,Email, Password);
+    }
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -47,11 +52,16 @@ const Register = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.form}>
-                    <TextInput value={Name} placeholder='Name' icon='people-alt' onChangeText={(Name) => setName(Name)}/>
+                    {/* <TextInput value={Name} placeholder='Name' icon='people-alt' onChangeText={(Name) => setName(Name)}/> */}
                     <TextInput value={Username} placeholder='Username' icon='person-add' onChangeText={(Username) => setUsername(Username)}/>
                     <TextInput value={Email} placeholder='Email' icon='mail' onChangeText={(Email) => setEmail(Email)}/>
                     <TextInput value={Password} placeholder='Password' icon='lock' secured={true} onChangeText={(Password) => setPassword(Password)}/>
-                    <Button value='SIGN UP' onPress={()=>Keyboard.dismiss()} disabled={Disabled}/>
+                    <Button value='SIGN UP' 
+                    onPress={()=>{
+                        handleRegister()
+                        Keyboard.dismiss()
+                    }} 
+                    disabled={Disabled}/>
                     <View style={styles.row}>
                         <Text>Already have an account? </Text>
                         <TextButton value='Sign In' blue={true} onPress={() => props.navigation.navigate('auth')}/>
@@ -87,4 +97,16 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Register
+
+const mapStateToProps = state => {
+    return {};
+};
+  
+const mapDispatchToProps = {
+    registerAction
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Register);

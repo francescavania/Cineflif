@@ -13,6 +13,8 @@ import { AirbnbRating } from 'react-native-elements';
 import Modal from '../../components/Modal';
 import { useSelector } from "react-redux";
 import Login from "../login/Login";
+import { connect } from 'react-redux'
+
 
 
 const Movie = (props) => {
@@ -160,8 +162,12 @@ const Movie = (props) => {
                                         />
                                     </View>
                                 </View>
-                                <Button onPress={toggleOverlay} titleStyle={{fontSize:12}} buttonStyle={{borderRadius:5,margin:ms(10),backgroundColor: Colors.red}} title='Rate This'/>
-                            </View>
+                                {props.token===''?
+                                    null:
+                                    <Button onPress={toggleOverlay} titleStyle={{fontSize:12}} buttonStyle={{borderRadius:5,margin:ms(10),backgroundColor: Colors.red}} title='Rate This'/>
+            
+                                }
+                                </View>
                             <View>
                                 <Text style={styles.movieInfo}>Released date : {MovieDetail.release_date}</Text>
                                 <Text style={styles.movieInfo}>Language : {MovieDetail.original_language}</Text>
@@ -229,4 +235,15 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Movie
+const mapStateToProps = (state) => ({
+    token:state.authReducer.token
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Movie);

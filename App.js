@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import {Store, Persistor} from './src/store/Store';
 import {PersistGate} from 'redux-persist/integration/react'
 
+
 const App = () => {
   useEffect(() => {
     RNBootSplash.hide({ fade: true });

@@ -6,11 +6,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Home, Profile, Reviews } from '../screens';
 import Colors from '../config/Colors';
 import HomeStack from './HomeStack';
+import AuthStack from './AuthStack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { connect } from 'react-redux'
 
 const Tab = createBottomTabNavigator();
 
-
-const MainTab = () => {
+const MainTab = (props) => {
     return (
         <Tab.Navigator 
             initialRouteName="homeStack"
@@ -24,7 +26,7 @@ const MainTab = () => {
         >
             <Tab.Screen 
                 name="Reviews" 
-                component={Reviews} 
+                component={props.token===''?AuthStack : Reviews} 
                 options={{
                     tabBarIcon: ({ color , size}) => (
                         <Icon name="chatbubble-outline" color={color} size={size}/>
@@ -42,12 +44,11 @@ const MainTab = () => {
             />
             <Tab.Screen 
                 name="Profile" 
-                component={Profile} 
+                component={props.token===''?AuthStack : Profile}  
                 options={{
                     tabBarIcon: ({ color , size}) => (
                         <Icon name="people" color={color} size={size}/>
-                    ),
-                    tabBarVisible:true,        
+                    ),       
                 }}
                 
             />
@@ -55,5 +56,16 @@ const MainTab = () => {
     )
 }
 
-export default MainTab
+const mapStateToProps = (state) => ({
+    token : state.authReducer.token
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MainTab);
 

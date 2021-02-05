@@ -5,6 +5,6 @@ import movieReducer from './MovieReducer';
 
 export const rootReducer = combineReducers({
     authReducer,
-    // movieReducer
+    movieReducer
 });
   

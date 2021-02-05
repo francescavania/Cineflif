@@ -17,8 +17,8 @@ import { connect, useDispatch } from 'react-redux';
 import { loginAction } from "../../store/actions/AuthAction";
 
 
-const Login = ({navigation}) => {
-    const dispatch = useDispatch()
+const Login = (props) => {
+    console.log(props,"props login")
 
     const [Disabled, setDisabled] = useState(true);
     const [Username, setUsername] = useState('');
@@ -43,10 +43,7 @@ const Login = ({navigation}) => {
     }, [Username,Password])
 
     const handlerSignIn = () =>{
-        // console.log(props)
-        // props.loginAction(Username, Password);
-        
-        dispatch(loginAction(Username, Password))
+        props.loginAction(Username, Password);
     }
 
     return (
@@ -66,15 +63,15 @@ const Login = ({navigation}) => {
                     <Button 
                         value='SIGN IN' 
                         onPress={()=>{
-                            Keyboard.dismiss()
                             handlerSignIn()
+                            Keyboard.dismiss()
                         }} 
                         disabled={Disabled}/>
                     <View style={styles.row}>
                         <Text>Don't have an account? </Text>
                         <TextButton value='Sign Up' onPress={() => {
                             clearState()
-                            navigation.navigate('register')
+                            props.navigation.navigate('register')
                         }} />
                     </View>
                 </View>
@@ -85,18 +82,16 @@ const Login = ({navigation}) => {
 
 const mapStateToProps = state => {
     return {
-        auth: 1
-        // Username: state.Login.Username,
     };
 };
   
-const mapDispachToProps = {
+const mapDispatchToProps = {
     loginAction
 };
   
 export default connect(
     mapStateToProps,
-    mapDispachToProps
+    mapDispatchToProps
 )(Login);
 
 const styles = StyleSheet.create({

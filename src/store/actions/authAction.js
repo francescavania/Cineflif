@@ -1,5 +1,6 @@
 const LOGIN = 'LOGIN'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const REGISTER = 'REGISTER'
+const LOGOUT = 'LOGOUT'
 
 
 export const loginAction = (username, password) => {
@@ -9,9 +10,15 @@ export const loginAction = (username, password) => {
     };
 };
   
-export const loginSuccess = (data) => {
+export const registerAction = (username,email,password) => {
     return {
-        type: LOGIN_SUCCESS,
-        payload: data,
+        type: REGISTER,
+        payload: {username,email,password},
     };
 }
+
+export const logoutAction = () => {
+    return {
+        type: LOGOUT ,
+    };
+};
