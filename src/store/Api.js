@@ -18,6 +18,7 @@ export const endPoint = {
     signUpUser: '/api/users/register',
     getUser: '/api/users/profile',
     loginUser: '/api/users/login',
+    updateUser:'/api/users/update',
 
     createReview: '/api/review/create',
     getReviewByUserId: '/api/review/open/id?id=',
@@ -25,5 +26,3 @@ export const endPoint = {
     
     
 }
-
-// export default url

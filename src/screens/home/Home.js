@@ -7,19 +7,25 @@ import GenreList from './component/GenreList';
 import FastImage from 'react-native-fast-image'
 import MovieItem from './component/MovieItem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { SearchBar } from 'react-native-elements';
-import { ActionFetchGenre } from "../../store/actions/MovieAction";
+// import { SearchBar } from 'react-native-elements';
+import SearchBar from 'react-native-search-bar';
+import { ActionFetchGenre , ActionSearchMovie} from "../../store/actions/MovieAction";
 import { connect } from 'react-redux'
 
 const Home = (props) => {
     const [Search, setSearch] = useState('')
 
     useEffect(() => {
-        props.ActionFetchGenre()
-    }, [])
+        if(Search === ''){
+            props.ActionFetchGenre()
+        }else{
+            console.log(Search,"search")
+            props.ActionSearchMovie(Search)
+        }
+    }, [Search])
     
     const navigateToMovie = (id) => {
-        console.log(id,"id movie select")
+        // console.log(id,"id movie select")
         props.navigation.navigate('movie',id)
     }
 
@@ -39,21 +45,26 @@ const Home = (props) => {
                 </View>
                 <View style={styles.search}>
                     <View style={styles.searchBar}>
-                        <SearchBar
+                    <SearchBar
+                        placeholder="Search"
+                        onChangeText={(Search) => setSearch(Search)}
+                        textColor={Colors.black}
+                        onBlur={Keyboard.dismiss}
+                    />
+                        {/* <SearchBar
                             containerStyle={{borderBottomWidth:0,borderTopWidth:0,backgroundColor:Colors.white,padding:0,}}
                             inputContainerStyle={{backgroundColor:Colors.lightGray,borderRadius:10}}
                             placeholder="Search"
                             textColor='black'
                             onChangeText={(Search) => setSearch(Search)}
-                        />
+
+                        /> */}
                     </View>
                 </View>
             </View>
             <GenreList />
             <MovieItem navigateToMovie={navigateToMovie}/>
-            {/* <GenreList genre={props.Genre} genreId={genreId} updateGenre={updateGenre}/>
-            <MovieItem Movie={Movie} genreName={genreName} getIdSelect={navigateToMovie}/> */}
-        </View>
+         </View>
     )
 }
 
@@ -90,7 +101,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    ActionFetchGenre
+    ActionFetchGenre,
+    ActionSearchMovie
 }
 
 export default connect(

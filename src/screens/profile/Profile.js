@@ -10,17 +10,23 @@ import { useSelector } from "react-redux";
 import Login from "../login/Login";
 import { connect } from 'react-redux';
 import { logoutAction } from "../../store/actions/AuthAction";
+import { getUserAction, editUserAction } from "../../store/actions/UserAction";
 
 const Profile = (props) => {
-    const [Email, setEmail] = useState('');
+    // console.log(props,"props profile")
+    const [Disabled, setDisabled] = useState(true);
+    const [Email, setEmail] = useState(null);
     const [Password, setPassword] = useState('');
-    const [Name, setName] = useState('');
-    const [Username, setUsername] = useState('');
+    const [Username, setUsername] = useState(null);
     const [imageSource, setImageSource] = useState(null);
 
     const chooseImage = () => {
         let options = {
-            mediaType:'photo'
+            mediaType:'photo',
+            noData: true,
+            storageOptions: {
+                skipBackup: true
+            }
         };
     
         launchImageLibrary(options, response => {
@@ -28,20 +34,43 @@ const Profile = (props) => {
     
           if (response.didCancel) {
             console.log('User cancelled photo picker');
-            Alert.alert('You did not select any image');
+            // Alert.alert('You did not select any image');
           } else if (response.error) {
             console.log('ImagePicker Error: ', response.error);
           } else {
             let source = { uri: response.uri };
-            setImageSource(source)
-            console.log({ source });
+            setImageSource(source.uri)
           }
         });
       }
-
+    
+    const checkSubmit = () =>{
+        if((Username==''&&Username!=props.username)||(Email==''&&Email!=props.email)||Password==''){
+            setDisabled(true)
+        }else{
+            setDisabled(false)
+        }
+    }
     const handleLogout = () =>{
         props.logoutAction();
     }
+
+    const handleEditUser = () =>{
+        if(Username==null&&Email==null){
+            props.editUserAction(props.username,props.email,Password,imageSource,props.token);
+        }else if(Email==null){
+            props.editUserAction(Username,props.email,Password,imageSource,props.token);
+        }else if(Username==null){
+            props.editUserAction(props.username,Email,Password,imageSource,props.token);
+        }else{
+            props.editUserAction(Username,Email,Password,imageSource,props.token);
+        }
+    }
+
+    useEffect(() => {
+        checkSubmit()
+        props.getUserAction(props.token)
+    }, [Email,Username,Password,imageSource])
 
 
     return (
@@ -50,17 +79,25 @@ const Profile = (props) => {
                 <View style={styles.container}>
                     <View style={styles.photo}>
                         <TouchableOpacity onPress={chooseImage}>
-                                <Image
-                                    source={require('../../assets/images/profile.png')}
-                                />
+                                {
+                                    props.image === ''?
+                                    <Image
+                                        source={require('../../assets/images/profile.png')}
+                                    />
+                                    :
+                                    <Image
+                                        source={{ uri: props.Image}}
+                                    />
+                                }
+                                
                         </TouchableOpacity> 
                     </View>
                     <View style={styles.form}>
-                        {/* <TextInput value={Name} placeholder='Name' icon='people-alt'/> */}
-                        <TextInput value={Username} placeholder='Username' icon='people-alt'/>
-                        <TextInput value={Email} placeholder='Email' icon='people-alt' disabled={true}/>
-                        <TextInput value={Password} placeholder='Password' icon='lock'/>
-                        <Button value='SUBMIT' backgroundColor='blue' onPress={()=>{
+                        <TextInput value={Username==null?props.username:Username} placeholder='Username' icon='people-alt' onChangeText={(Username) => setUsername(Username)}/>
+                        <TextInput value={Email==null?props.email:Email} placeholder='Email' icon='people-alt' onChangeText={(Email) => setEmail(Email)}/>
+                        <TextInput value={Password} placeholder='Password' icon='lock' onChangeText={(Password) => setPassword(Password)}/>
+                        <Button value='SUBMIT' backgroundColor='blue' disabled={Disabled} onPress={()=>{
+                            handleEditUser()
                             Keyboard.dismiss()}}/>
                         <Button value='LOG OUT' onPress={()=>{
                             handleLogout()
@@ -91,11 +128,17 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-    
+    token : state.authReducer.token,
+    username:state.userReducer.username,
+    email:state.userReducer.email,
+    image:state.userReducer.image,
+    // password : state.authReducer.password,
 })
 
 const mapDispatchToProps = {
-    logoutAction
+    logoutAction,
+    getUserAction,
+    editUserAction
 }
 
 

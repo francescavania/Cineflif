@@ -18,10 +18,9 @@ import { loginAction } from "../../store/actions/AuthAction";
 
 
 const Login = (props) => {
-    console.log(props,"props login")
 
     const [Disabled, setDisabled] = useState(true);
-    const [Username, setUsername] = useState('');
+    const [Username, setUsername] = useState(props.username ? props.username:'');
     const [Password, setPassword] = useState('');
 
     const checkInput = () =>{
@@ -80,14 +79,13 @@ const Login = (props) => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-    };
-};
-  
+const mapStateToProps = (state) => ({
+    username:state.authReducer.username
+})
+
 const mapDispatchToProps = {
     loginAction
-};
+}
   
 export default connect(
     mapStateToProps,

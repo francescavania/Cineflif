@@ -31,6 +31,7 @@ function* registerSaga({payload}){
         yield put(RootNavigation.navigate('auth',{}))
     } catch (error) {
         console.log(error)
+        Alert.alert('berhasil Register, ayok Sign In')
         // yield put({ type: 'REGISTER_ERROR', error });
     }
 }

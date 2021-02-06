@@ -31,6 +31,7 @@ const Movie = (props) => {
     const [readMoreId, setreadMoreId] = useState(0)
     // const [TotalReview, setTotalReview] = useState(0)
     const [lines, setLines] = useState(Array(MovieReview.length).fill('hide'));
+    const [Rating, setRating] = useState(0)
 
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -103,7 +104,10 @@ const Movie = (props) => {
         </View>
     )
 
-    
+    const onFinishRating = (rating)=>{
+        setRating(rating)
+        console.log(Rating)
+    }
 
 
     return (
@@ -195,7 +199,7 @@ const Movie = (props) => {
                     </View>
                 )}
             </View>
-            <Modal onpress={toggleOverlay} visible={visible}/>
+            <Modal onpress={toggleOverlay} visible={visible} onFinishRating={onFinishRating}/>
         </View>
         
     )

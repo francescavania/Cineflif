@@ -8,40 +8,29 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Colors from '../config/Colors';
 import { s, vs, ms } from 'react-native-size-matters';
 
-export default function Modal({onpress,visible=false,rating=0,onpressSubmit}) {
+export default function Modal({onpress,visible=false,onpressSubmit,onChangeText,onFinishRating}) {
   return (
     <View>
       <Overlay isVisible={visible} onBackdropPress={onpress}>
           <View>
               <Text style={{alignSelf:'center',fontSize:18}}>How do you think about this movie?</Text>
-                <Rating 
-                showRating 
-                type='custom' 
-                imageSize={30} 
+                <AirbnbRating  
+                // showRating
+                size={25} 
                 minValue={0} 
-                startingValue={rating}
+                reviewSize={20}
+                // startingValue={0}
+                reviews={['1', '2', '3', '4','5']}
+                defaultRating={0}
+                onFinishRating={onFinishRating}
                 />
-                {/* <AirbnbRating  
-                showRating={false}
-                count={5}
-                size={25}
-                defaultRating={rating}/> */}
-              {/* </View> */}
-              {/* <AirbnbRating
-                  type='custom'
-                  ratingBackgroundColor= {Colors.lightGray}
-                  count={5}
-                  defaultRating={rating}
-                  showRating={false}
-                  size={20}
-                  isDisabled={false}
-              /> */}
               <View style={styles.container}>
                 <Textarea
-                placeholder={'Write here..'}
+                  placeholder={'Write here..'}
                   containerStyle={styles.textareaContainer}
                   style={styles.textarea}
                   underlineColorAndroid={'transparent'}
+                  onChangeText={onChangeText}
                 />
               </View>
               <View style={{flexDirection:'row',justifyContent:'center'}}> 

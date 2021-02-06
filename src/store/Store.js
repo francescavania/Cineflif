@@ -16,9 +16,10 @@ import rootSaga from './sagas'
 const PersistConfig = {
     key: 'root',
     storage: AsyncStorage,
+    whitelist: ['authReducer']
 };
 
-// const PersistedReducer = persistReducer(PersistConfig, rootReducer);
+const PersistedReducer = persistReducer(PersistConfig, rootReducer);
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -26,11 +27,11 @@ const sagaMiddleware = createSagaMiddleware()
 const AllMiddleware = applyMiddleware(sagaMiddleware, logger)
 
 // //bikin store
-// export const Store = createStore(PersistedReducer, AllMiddleware);
-export const Store = createStore(rootReducer, AllMiddleware);
+export const Store = createStore(PersistedReducer, AllMiddleware);
+// export const Store = createStore(rootReducer, AllMiddleware);
 
 // //create current store persisted
-// export const Persistor = persistStore(Store)
+export const Persistor = persistStore(Store)
 
 // //run saga
 sagaMiddleware.run(rootSaga)

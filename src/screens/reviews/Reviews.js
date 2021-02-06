@@ -7,6 +7,8 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import FastImage from 'react-native-fast-image'
 import { AirbnbRating } from 'react-native-elements';
 import Login from "../login/Login";
+import { connect } from 'react-redux'
+
 
 const Review = () => {
     const [Review, setReview] = useState([])
@@ -90,4 +92,15 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Review
+const mapStateToProps = (state) => ({
+    
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Review);

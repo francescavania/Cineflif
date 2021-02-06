@@ -8,7 +8,6 @@ const intialState = {
   };
 
   const authReducer = (state = intialState , action) => {
-    console.log(action,"action reducer")
     switch (action.type){
       case 'LOGIN_SUCCESS':
         return {

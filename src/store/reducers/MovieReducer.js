@@ -7,7 +7,6 @@ const initialState= {
 }
 
 export default (state = initialState , action) => {
-    console.log(action,"reducer")
     switch (action.type){
         case 'GENRE_FETCH_SUCCEEDED':
             return {
@@ -27,6 +26,12 @@ export default (state = initialState , action) => {
             return {
                 ...state,
                 selectedMovie:action.movie
+            }
+        case 'SEARCH_MOVIE_FETCH_SUCCEEDED':
+            return {
+                ...state,
+                movies:action.movie,
+                selectedGenreName: "-"
             }
         default:
             return state;
