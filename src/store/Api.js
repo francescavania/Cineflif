@@ -8,7 +8,7 @@ export default axios.create({
 export const endPoint = {
     searchByTitle: '/api/movies/search',
     searchByTag: '/api/movies/tag?tag=',
-    searchByGenre: '/api/movies/category?genre=',
+    searchByGenre: '/api/movies/category?id=',
 
     getReviewByMovieId: '/api/review/open/movie?movieId=',
     getAllGenres:'/api/movies/category/all',

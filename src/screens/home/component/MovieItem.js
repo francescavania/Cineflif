@@ -5,17 +5,22 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Colors from '../../../config/Colors';
 import FastImage from 'react-native-fast-image'
 import { Rating } from 'react-native-elements';
+import { connect } from 'react-redux'
 
 
 const { width, height } = Dimensions.get('window');
 
-const MovieItem = ({Movie, genreName, getIdSelect}) => {
+const MovieItem = (props) => {
+    const {Movie, genreName, getIdSelect}= props
+
+    console.log(props,"propsmovie items")
+
     const [ListRef, setListRef] = useState(null)
 
     const renderMovie = ({ item, index }) => (
         <View style={styles.itemContainer}>
             <TouchableOpacity 
-            onPress={()=>{getIdSelect(item.id)}}
+            onPress={()=>{getIdSelect(item._id)}}
             style={[
                 { 
                     backgroundColor: 'white',
@@ -37,12 +42,12 @@ const MovieItem = ({Movie, genreName, getIdSelect}) => {
                     <FastImage
                         style={{...StyleSheet.absoluteFillObject}}
                         source={{
-                            uri: 'https://image.tmdb.org/t/p/w185' + item.backdrop_path,
+                            uri: item.image,
                         }}
                     />
                 </View>
-                <Text numberOfLines={1} style={styles.movieTitle}>{item.original_title}</Text>
-                <Text numberOfLines={1} style={styles.date}>{item.release_date}</Text>
+                <Text numberOfLines={1} style={styles.movieTitle}>{item.title}</Text>
+                <Text numberOfLines={1} style={styles.date}>{item.synopsis}</Text>
                 {/* <Rating imageSize={20} readonly startingValue={item.vote_average/2} /> */}
             </TouchableOpacity>
         </View>
@@ -56,7 +61,7 @@ const MovieItem = ({Movie, genreName, getIdSelect}) => {
                 showsVerticalScrollIndicator={false}
                 data={Movie}
                 renderItem={renderMovie}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item._id.toString()}
                 numColumns={2}
                 scrollsToTop={true}
                 // ref={(ref) => { setListRef(ref) }}
@@ -94,4 +99,16 @@ const styles = StyleSheet.create({
     
 })
 
-export default MovieItem
+const mapStateToProps = (state) => ({
+    Movie : state.movieReducer.movies, 
+    genreName : state.movieReducer.selectedGenreName
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MovieItem);

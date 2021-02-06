@@ -1,36 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { View, Text, FlatList, TouchableOpacity,StyleSheet } from 'react-native';
 import { s, vs, ms } from 'react-native-size-matters';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Colors from '../../../config/Colors';
+import { connect } from 'react-redux'
+import { ActionSelectGenre } from "../../../store/actions/MovieAction";
 
-export default function GenreList({genre, genreId, updateGenre}) {
 
-  const [selectedId, setSelectedId] = useState(genreId);
+function GenreList(props) {
+  const {Genre,selectedId,ActionSelectGenre} = props
 
   const renderGenre = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? Colors.red : Colors.white;
-    const color = item.id === selectedId ? Colors.white : 'black'
+    const backgroundColor = item._id === selectedId ? Colors.red : Colors.white;
+    const color = item._id === selectedId ? Colors.white : 'black'
     return (
         <View style={[styles.listCon,{backgroundColor}]}>
           <TouchableOpacity onPress={()=>{
-              updateGenre(item.id,item.name)
-              setSelectedId(item.id)
+              ActionSelectGenre(item._id,item.genre)
           }}>
-              <Text style={{color}}>{item.name}</Text>
+              <Text style={{color}}>{item.genre}</Text>
           </TouchableOpacity>
         </View>
     )
   };
   return (
     <View style={styles.genreContainer}>
-        {/* <Text style={styles.title}>Genre</Text> */}
         <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={genre}
+            data={Genre}
             renderItem={renderGenre}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item._id.toString()}
             extraData={selectedId}
         />
     </View>
@@ -56,3 +56,18 @@ const styles = StyleSheet.create({
 
   },
 })
+
+
+const mapStateToProps = (state) => ({
+  Genre : state.movieReducer.genres,
+  selectedId : state.movieReducer.selectedGenre
+})
+
+const mapDispatchToProps = {
+  ActionSelectGenre
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GenreList);

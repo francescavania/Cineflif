@@ -2,14 +2,27 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import React from 'react'
 import { Movie, Home } from '../screens';
+import { connect } from 'react-redux'
+import AuthStack from './AuthStack';
 
 const Stack = createStackNavigator();
 
-const HomeStack = () => (
+const HomeStack = (props) => (
   <Stack.Navigator initialRouteName="home" headerMode="none">
     <Stack.Screen name="home" component={Home} />
-    <Stack.Screen name="movie" component={Movie} />
+    <Stack.Screen name="movie" component={props.token===''?AuthStack : Movie} />
   </Stack.Navigator>
 );
 
-export default HomeStack;
+const mapStateToProps = (state) => ({
+  token : state.authReducer.token
+})
+
+const mapDispatchToProps = {
+  
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeStack);
