@@ -1,5 +1,4 @@
 const intialState = {
-    email: '',
     // user: null,
     // loading: false,
     // errorMessage: '',

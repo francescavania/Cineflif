@@ -2,7 +2,8 @@ const initialState= {
     movies : [],
     genres : [],
     selectedGenre:'',
-    selectedGenreName:''
+    selectedGenreName:'',
+    selectedMovie:{}
 }
 
 export default (state = initialState , action) => {
@@ -21,6 +22,11 @@ export default (state = initialState , action) => {
                 selectedGenre:action.payload.genreId,
                 selectedGenreName:action.payload.genreName,
                 movies:action.payload.movies
+            }
+        case 'MOVIE_DETAIL_FETCH_SUCCEEDED':
+            return {
+                ...state,
+                selectedMovie:action.movie
             }
         default:
             return state;

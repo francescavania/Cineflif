@@ -6,12 +6,13 @@ import Colors from '../../../config/Colors';
 import FastImage from 'react-native-fast-image'
 import { Rating } from 'react-native-elements';
 import { connect } from 'react-redux'
+import { ActionSelectMovie } from "../../../store/actions/MovieAction";
 
 
 const { width, height } = Dimensions.get('window');
 
 const MovieItem = (props) => {
-    const {Movie, genreName, getIdSelect}= props
+    const {Movie, genreName, getIdSelect,navigateToMovie}= props
 
     console.log(props,"propsmovie items")
 
@@ -20,7 +21,7 @@ const MovieItem = (props) => {
     const renderMovie = ({ item, index }) => (
         <View style={styles.itemContainer}>
             <TouchableOpacity 
-            onPress={()=>{getIdSelect(item._id)}}
+            onPress={()=>{props.navigateToMovie(item._id)}}
             style={[
                 { 
                     backgroundColor: 'white',
@@ -101,11 +102,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     Movie : state.movieReducer.movies, 
-    genreName : state.movieReducer.selectedGenreName
+    genreName : state.movieReducer.selectedGenreName,
+    token : state.authReducer.token
 })
 
 const mapDispatchToProps = {
-    
+    ActionSelectMovie
 }
 
 export default connect(

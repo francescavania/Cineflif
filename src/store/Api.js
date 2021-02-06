@@ -9,6 +9,7 @@ export const endPoint = {
     searchByTitle: '/api/movies/search',
     searchByTag: '/api/movies/tag?tag=',
     searchByGenre: '/api/movies/category?id=',
+    getMovieById: '/api/movies/id?id=',
 
     getReviewByMovieId: '/api/review/open/movie?movieId=',
     getAllGenres:'/api/movies/category/all',

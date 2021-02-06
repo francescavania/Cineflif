@@ -14,14 +14,15 @@ import Modal from '../../components/Modal';
 import { useSelector } from "react-redux";
 import Login from "../login/Login";
 import { connect } from 'react-redux'
-
+import { ActionSelectMovie } from "../../store/actions/MovieAction";
+import { TextButton } from '../../components';
+import * as RootNavigation from '../../navigation/RootNavigation';
 
 
 const Movie = (props) => {
-
-    const {navigation, route} = props
+    const {navigation, route, MovieDetail} = props
     
-    const [MovieDetail, setMovieDetail] = useState({});
+    // const [MovieDetail, setMovieDetail] = useState({});
     const [MovieReview, setMovieReview] = useState([])
 
     const [customStyleIndex, setCustomStyleIndex] = useState(0);
@@ -35,20 +36,9 @@ const Movie = (props) => {
         setVisible(!visible);
       };
 
-    async function fetchDetailMovies(){
-        try {
-            const res = await axios.get('https://api.themoviedb.org/3/movie/'+route.params+'?api_key=781eb13279207d3b00115859616b4710&language=en-US')
-            setMovieDetail(res.data)
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    
     async function fetchReview(){
         try {
-            const res = await axios.get('https://api.themoviedb.org/3/movie/'+route.params+'/reviews?api_key=781eb13279207d3b00115859616b4710&language=en-US&page=1')
+            const res = await axios.get('https://api.themoviedb.org/3/movie/464052/reviews?api_key=781eb13279207d3b00115859616b4710&language=en-US&page=1')
             setMovieReview(res.data.results)
             // setAwal()
         } catch (error) {
@@ -58,11 +48,10 @@ const Movie = (props) => {
     }
     
     useEffect(() => {
-        fetchDetailMovies();
-        fetchReview();
-        // return () => {
-        //     setMovieReview()
-        // }
+        props.ActionSelectMovie(route.params)
+        if(props.token != ''){
+            fetchReview();
+        }
     }, [route.params]);
     
     
@@ -77,7 +66,7 @@ const Movie = (props) => {
                 <View style={{flexDirection:'row'}}>
                     <View style={{width:50,height:50,margin:ms(10)}}>
                         <FastImage
-                            style={{width:50,height:50,borderRadius:ms(50),backgroundColor:Colors.red}}
+                            style={{width:50,height:50,borderRadius:ms(50),backgroundColor:Colors.gray}}
                             resizeMode='cover'
                             source={{ uri: 'https://image.tmdb.org/t/p/w500' + item.author_details.avatar_path}}
                         />
@@ -123,7 +112,7 @@ const Movie = (props) => {
                 <FastImage
                     style={{...StyleSheet.absoluteFillObject}}
                     resizeMode='cover'
-                    source={{ uri: 'https://image.tmdb.org/t/p/w780' + MovieDetail.backdrop_path }}
+                    source={{ uri: MovieDetail.image }}
                 />
             </View>  
             <View>
@@ -151,7 +140,7 @@ const Movie = (props) => {
                         <View style={{paddingHorizontal:ms(10)}}>
                             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                                 <View style={{maxWidth:wp(70)}}>
-                                    <Text style={{color:Colors.black,fontSize:16,fontWeight:'bold',paddingBottom:ms(5),paddingTop:ms(10)}}>{MovieDetail.original_title}</Text>
+                                    <Text style={{color:Colors.black,fontSize:16,fontWeight:'bold',paddingBottom:ms(5),paddingTop:ms(10)}}>{MovieDetail.title}</Text>
                                     <View style={{paddingBottom:(5),alignItems:'flex-start'}}>
                                         <AirbnbRating
                                             count={5}
@@ -169,10 +158,11 @@ const Movie = (props) => {
                                 }
                                 </View>
                             <View>
-                                <Text style={styles.movieInfo}>Released date : {MovieDetail.release_date}</Text>
-                                <Text style={styles.movieInfo}>Language : {MovieDetail.original_language}</Text>
-                                <Text style={styles.movieInfo}>Runtime : {MovieDetail.runtime} Minutes</Text>
-                                <Text style={{paddingTop:ms(5)}}>{MovieDetail.overview}</Text>
+                                <Text style={styles.movieInfo}>Released date : {MovieDetail.release_date ? MovieDetail.release_date:"-"}</Text>
+                                <Text style={styles.movieInfo}>Language : {MovieDetail.original_language ? MovieDetail.original_language:"-"}</Text>
+                                <Text style={styles.movieInfo}>Runtime : {MovieDetail.runtime ? MovieDetail.original_language+" Minutes":"-"}</Text>
+                                <Text style={styles.movieInfo}>Genre : {MovieDetail.genre}</Text>
+                                <Text style={{paddingTop:ms(5)}}>{MovieDetail.synopsis}</Text>
                             </View>
                         </View>
                         
@@ -180,11 +170,28 @@ const Movie = (props) => {
                 )}
                 {customStyleIndex === 1 && (
                     <View style={{paddingBottom:hp(35)}}>
-                        <FlatList
-                        data={MovieReview}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={renderReview}
-                        />
+                        {
+                            props.token === '' ?
+                            <View style={{alignSelf:'center',flexDirection:'row',paddingTop:10}}>
+                                <View>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('AuthStack')
+                                    }}>
+                                        <View>
+                                            <Text style={{textDecorationLine:'underline',color:Colors.darkGray}}>Login</Text>
+                                        </View>
+                                    </TouchableOpacity> 
+                                </View>
+                                <Text style={{color:Colors.darkGray}}> to see reviews</Text>
+                            </View>
+                            
+                            :
+                            <FlatList
+                                data={MovieReview}
+                                keyExtractor={item => item.id.toString()}
+                                renderItem={renderReview}
+                            />
+                        }
                     </View>
                 )}
             </View>
@@ -195,16 +202,6 @@ const Movie = (props) => {
 }
 
 const styles = StyleSheet.create({
-    // container: {
-    //     flex: 1,
-    //     flexDirection: "column"
-    //   },
-    // image: {
-    //     flex: 1,
-    //     resizeMode: "cover",
-    //     justifyContent: "center"
-    // },
-
     containter: {
         width: wp(100), //for full screen
         height: hp(100) //for full screen
@@ -236,11 +233,12 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-    token:state.authReducer.token
+    token:state.authReducer.token,
+    MovieDetail:state.movieReducer.selectedMovie
 })
 
 const mapDispatchToProps = {
-    
+    ActionSelectMovie
 }
 
 export default connect(

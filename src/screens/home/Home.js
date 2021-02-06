@@ -17,13 +17,9 @@ const Home = (props) => {
     useEffect(() => {
         props.ActionFetchGenre()
     }, [])
-
-    // const updateGenre = (id,name) => {
-    //     setgenreId(id);
-    //     setgenreName(name)
-    //   } 
     
     const navigateToMovie = (id) => {
+        console.log(id,"id movie select")
         props.navigation.navigate('movie',id)
     }
 
@@ -54,7 +50,7 @@ const Home = (props) => {
                 </View>
             </View>
             <GenreList />
-            <MovieItem getIdSelect={navigateToMovie}/>
+            <MovieItem navigateToMovie={navigateToMovie}/>
             {/* <GenreList genre={props.Genre} genreId={genreId} updateGenre={updateGenre}/>
             <MovieItem Movie={Movie} genreName={genreName} getIdSelect={navigateToMovie}/> */}
         </View>
