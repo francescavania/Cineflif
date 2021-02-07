@@ -7,6 +7,7 @@ const initialState= {
 }
 
 export default (state = initialState , action) => {
+    console.log(action,"masuk reducer")
     switch (action.type){
         case 'GENRE_FETCH_SUCCEEDED':
             return {

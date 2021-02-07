@@ -8,9 +8,10 @@ import FastImage from 'react-native-fast-image'
 import { AirbnbRating } from 'react-native-elements';
 import Login from "../login/Login";
 import { connect } from 'react-redux'
+import { ActionFetchReview } from "../../store/actions/ReviewAction";
 
 
-const Review = () => {
+const Review = (props) => {
     const [Review, setReview] = useState([])
     const [lines, setLines] = useState(Array(Review.length).fill('hide'));
 
@@ -26,7 +27,8 @@ const Review = () => {
     }
 
     useEffect(() => {
-        fetchReview()
+        // fetchReview()
+        props.ActionFetchReview(props.token)
     }, [])
 
 
@@ -93,11 +95,11 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-    
+    token : state.authReducer.token,
 })
 
 const mapDispatchToProps = {
-    
+    ActionFetchReview
 }
 
 export default connect(

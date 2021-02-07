@@ -32,7 +32,7 @@ function* editUserSaga({payload}){
                 'Content-Type': 'application/json'
             },
         })
-        // console.log(user,"updatedddd")
+        console.log(user,"updatedddd")
         // yield put({ type: 'GET_USER_SUCCESS', payload:user.data.data});
     } catch (error) {
         console.log(error)

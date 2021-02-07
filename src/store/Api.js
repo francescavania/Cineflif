@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://cineflixmovieapp.herokuapp.com'
+  baseURL: 'https://cineflix-dev.herokuapp.com'
 });
 
 
 export const endPoint = {
-    searchByTitle: '/api/movies/search',
+    searchByTitle: '/api/movies/search?search=',
     searchByTag: '/api/movies/tag?tag=',
     searchByGenre: '/api/movies/category?id=',
     getMovieById: '/api/movies/id?id=',
@@ -21,7 +21,7 @@ export const endPoint = {
     updateUser:'/api/users/update',
 
     createReview: '/api/review/create',
-    getReviewByUserId: '/api/review/open/id?id=',
+    getReviewByUsername: '/api/review/open/user',
     deleteReviewById: '/api/review/delete?id=',
     
     

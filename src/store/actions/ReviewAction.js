@@ -1,8 +1,8 @@
 export const GET_REVIEW_REQUESTED = 'GET_REVIEW_REQUESTED'
 
-export const ActionFetchReview = (username) => {
+export const ActionFetchReview = (token) => {
   return {
     type: GET_REVIEW_REQUESTED,
-    payload:username
+    payload:token
   };
 };
