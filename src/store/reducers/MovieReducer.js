@@ -3,11 +3,12 @@ const initialState= {
     genres : [],
     selectedGenre:'',
     selectedGenreName:'',
-    selectedMovie:{}
+    selectedMovie:{},
+    reviews:[]
 }
 
 export default (state = initialState , action) => {
-    console.log(action,"masuk reducer")
+    // console.log(action,"masuk reducer")
     switch (action.type){
         case 'GENRE_FETCH_SUCCEEDED':
             return {
@@ -33,6 +34,12 @@ export default (state = initialState , action) => {
                 ...state,
                 movies:action.movie,
                 selectedGenreName: "-"
+            }
+        case 'MOVIE_REVIEW_SUCCEEDED':
+            return {
+                ...state,
+                reviews:action.movie,
+                
             }
         default:
             return state;

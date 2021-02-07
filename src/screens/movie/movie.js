@@ -14,16 +14,17 @@ import Modal from '../../components/Modal';
 import { useSelector } from "react-redux";
 import Login from "../login/Login";
 import { connect } from 'react-redux'
-import { ActionSelectMovie } from "../../store/actions/MovieAction";
+import { ActionSelectMovie, ActionGetMovieReview } from "../../store/actions/MovieAction";
 import { TextButton } from '../../components';
 import * as RootNavigation from '../../navigation/RootNavigation';
 
 
 const Movie = (props) => {
-    const {navigation, route, MovieDetail} = props
+    const {navigation, route, MovieDetail,MovieReview} = props
+    // console.log(MovieReview,"MovieReview")
     
     // const [MovieDetail, setMovieDetail] = useState({});
-    const [MovieReview, setMovieReview] = useState([])
+    // const [MovieReview, setMovieReview] = useState([])
 
     const [customStyleIndex, setCustomStyleIndex] = useState(0);
     const [ReadMore,setReadMore]=useState(false);
@@ -51,9 +52,10 @@ const Movie = (props) => {
     useEffect(() => {
         props.ActionSelectMovie(route.params)
         if(props.token != ''){
-            fetchReview();
+            props.ActionGetMovieReview(MovieDetail._id,props.token)
+            // fetchReview();
         }
-    }, [route.params]);
+    }, [MovieDetail._id]);
     
     
     const handleCustomIndexSelect = (index) => {
@@ -61,6 +63,9 @@ const Movie = (props) => {
     };
 
 
+    // const renderReview = ({ item, index }) =>{
+    //     console.log("masuk sini")
+    // }
     const renderReview = ({ item, index }) =>(
         <View style={{backgroundColor:Colors.white,marginTop:5}}>
             <View style={{paddingHorizontal:ms(10)}}>
@@ -69,14 +74,14 @@ const Movie = (props) => {
                         <FastImage
                             style={{width:50,height:50,borderRadius:ms(50),backgroundColor:Colors.gray}}
                             resizeMode='cover'
-                            source={{ uri: 'https://image.tmdb.org/t/p/w500' + item.author_details.avatar_path}}
+                            source={{ uri: item.user.image}}
                         />
                     </View>
                     <View>
-                        <Text style={{paddingTop:ms(10),paddingBottom:ms(5),paddingHorizontal:ms(3)}}>{item.author}</Text>
+                        <Text style={{paddingTop:ms(10),paddingBottom:ms(5),paddingHorizontal:ms(3)}}>{item.user.username}</Text>
                         <AirbnbRating
                             count={5}
-                            defaultRating={item.author_details.rating/2}
+                            defaultRating={item.rating}
                             showRating={false}
                             size={15}
                             isDisabled={true}
@@ -86,7 +91,7 @@ const Movie = (props) => {
                 <View>
                     <Text
                         numberOfLines={lines[index] == 'show' ? 99 : 3}>
-                        {item.content}
+                        {item.review}
                         </Text>
                         <Text
                         style={{paddingBottom: ms(10),color:Colors.darkGray}}
@@ -192,7 +197,7 @@ const Movie = (props) => {
                             :
                             <FlatList
                                 data={MovieReview}
-                                keyExtractor={item => item.id.toString()}
+                                keyExtractor={item => item._id}
                                 renderItem={renderReview}
                             />
                         }
@@ -238,11 +243,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     token:state.authReducer.token,
-    MovieDetail:state.movieReducer.selectedMovie
+    MovieDetail:state.movieReducer.selectedMovie,
+    MovieReview:state.movieReducer.reviews
 })
 
 const mapDispatchToProps = {
-    ActionSelectMovie
+    ActionSelectMovie,
+    ActionGetMovieReview
 }
 
 export default connect(

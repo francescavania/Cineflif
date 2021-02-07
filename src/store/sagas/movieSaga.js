@@ -35,7 +35,7 @@ function* fetchMovieById({payload}) {
  }
 
 function* fetchSearchMovie({payload}) {
-    console.log(payload,"payload search")
+    // console.log(payload,"payload search")
     try {
         const movie = yield API.get(endPoint.searchByTitle+payload)
         yield put({type: "SEARCH_MOVIE_FETCH_SUCCEEDED", movie:movie.data.data});
@@ -43,19 +43,27 @@ function* fetchSearchMovie({payload}) {
         console.log(e)
     }
 }
-// function* fetchMoviewReview(payload) {
-//     try {
-//         const movie = yield API.get(endPoint.getReviewByMovieId+payload)
-//         // console.log(movie,"payload fetchMoviewReview")
-//         // yield put({type: "MOVIE_DETAIL_FETCH_SUCCEEDED", movie:movie.data.data});
-//     } catch (e) {
-//         console.log(e)
-//     }
-//  }
+
+function* fetchMoviewReview({payload}) {
+    // console.log(payload,"fetchMoviewReview saga ")
+    try {
+        const movie = yield API.get(endPoint.getReviewByMovieId+payload.movieId,{
+            headers:{
+                "Authorization" : "Bearer " + payload.token,
+                'Content-Type': 'application/json'
+            }
+        })
+        console.log(movie,"payload fetchMoviewReview")
+            yield put({type: "MOVIE_REVIEW_SUCCEEDED", movie:movie.data.data});
+    } catch (e) {
+        console.log(e)
+    }
+ }
 
 export function* movieWatcher() {
     yield all([takeLatest('GENRE_FETCH_REQUESTED', fetchGenre),
     takeLatest('SELECT_GENRE_REQUESTED', fetchMovie),
     takeLatest('SELECT_MOVIE_REQUESTED', fetchMovieById),
-    takeLatest('SEARCH_MOVIE_REQUESTED', fetchSearchMovie)]);
+    takeLatest('SEARCH_MOVIE_REQUESTED', fetchSearchMovie),
+    takeLatest('MOVIE_REVIEW_REQUESTED', fetchMoviewReview)]);
 }

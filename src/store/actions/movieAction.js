@@ -2,7 +2,7 @@ export const GENRE_FETCH_REQUESTED = 'GENRE_FETCH_REQUESTED';
 export const MOVIE_FETCH_REQUESTED = 'MOVIE_FETCH_REQUESTED';
 export const SELECT_GENRE_REQUESTED = 'SELECT_GENRE_REQUESTED'
 export const SELECT_MOVIE_REQUESTED = 'SELECT_MOVIE_REQUESTED'
-export const GET_MOVIE_REVIEW_REQUESTED = 'GET_MOVIE_REVIEW_REQUESTED'
+export const MOVIE_REVIEW_REQUESTED = 'MOVIE_REVIEW_REQUESTED'
 export const SEARCH_MOVIE_REQUESTED = 'SEARCH_MOVIE_REQUESTED'
 
 export const ActionFetchGenre = () => {
@@ -25,10 +25,11 @@ export const ActionSelectMovie = (movieId) => {
   };
 };
 
-export const ActionGetMovieReview = (movieId) => {
+export const ActionGetMovieReview = (movieId,token) => {
+  // console.log(movieId,"action ActionGetMovieReview")
   return {
-    type: GET_MOVIE_REVIEW_REQUESTED,
-    payload:movieId,
+    type: MOVIE_REVIEW_REQUESTED,
+    payload:{movieId,token}
   };
 };
 

@@ -13,6 +13,7 @@ function* fetchUserReview({payload}) {
             }
         })
         yield console.log(reviews,"reviews")
+        yield put({type: "REVIEW_FETCH_SUCCEEDED", reviews:reviews.data.data});
     } catch (e) {
         console.log(e)
     }
