@@ -6,3 +6,11 @@ export const ActionFetchReview = (token) => {
     payload:token
   };
 };
+
+export const ActionDeleteReview = (token,reviewId) => {
+  return {
+    type: 'DELETE_REVIEW_REQUESTED',
+    payload:{token,reviewId}
+  };
+};
+

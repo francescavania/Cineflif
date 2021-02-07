@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import { View, Text ,StyleSheet, FlatList} from 'react-native'
+import { View, Text ,StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 import axios from 'axios';
 import Colors from '../../config/Colors';
 import { s, vs, ms } from 'react-native-size-matters';
@@ -8,7 +8,7 @@ import FastImage from 'react-native-fast-image'
 import { AirbnbRating } from 'react-native-elements';
 import Login from "../login/Login";
 import { connect } from 'react-redux'
-import { ActionFetchReview } from "../../store/actions/ReviewAction";
+import { ActionFetchReview , ActionDeleteReview} from "../../store/actions/ReviewAction";
 
 
 const Review = (props) => {
@@ -37,23 +37,34 @@ const Review = (props) => {
     const renderReview = ({ item, index }) =>(
         <View style={{backgroundColor:Colors.white,marginBottom:5}}>
             <View style={{paddingHorizontal:ms(10)}}>
-                <View style={{flexDirection:'row'}}>
-                    <View style={{width:50,height:50,margin:ms(10)}}>
-                        <FastImage
-                            style={{width:50,height:50,borderRadius:ms(50),backgroundColor:Colors.red}}
-                            resizeMode='cover'
-                            source={{ uri: item.movie.image}}
-                        />
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <View style={{flexDirection:'row'}}>
+                        <View style={{width:50,height:50,margin:ms(10)}}>
+                            <FastImage
+                                style={{width:50,height:50,borderRadius:ms(50),backgroundColor:Colors.red}}
+                                resizeMode='cover'
+                                source={{ uri: item.movie.image}}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{paddingTop:ms(10),paddingBottom:ms(5),paddingHorizontal:ms(3),maxWidth:wp(60)}}>{item.movie.title}</Text>
+                            <View style={{alignSelf:'flex-start'}}>
+                                <AirbnbRating
+                                    count={5}
+                                    defaultRating={item.rating}
+                                    showRating={false}
+                                    size={15}
+                                    isDisabled={true}
+                                />
+                            </View>
+                        </View>
                     </View>
-                    <View>
-                        <Text style={{paddingTop:ms(10),paddingBottom:ms(5),paddingHorizontal:ms(3)}}>{item.movie.title}</Text>
-                        <AirbnbRating
-                            count={5}
-                            defaultRating={item.rating}
-                            showRating={false}
-                            size={15}
-                            isDisabled={true}
-                        />
+                    <View style={{padding:3}}>
+                        <TouchableOpacity onPress={()=>{
+                            props.ActionDeleteReview(props.token,item._id)
+                        }}>
+                            <Text style={{color:Colors.darkGray}}>Delete</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View>
@@ -102,7 +113,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    ActionFetchReview
+    ActionFetchReview,
+    ActionDeleteReview
 }
 
 export default connect(
