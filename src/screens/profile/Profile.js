@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import Login from "../login/Login";
 import { connect } from 'react-redux';
 import { logoutAction } from "../../store/actions/AuthAction";
-import { getUserAction, editUserAction } from "../../store/actions/UserAction";
+import { getUserAction, editUserAction, editPhotoAction } from "../../store/actions/UserAction";
 
 const Profile = (props) => {
     // console.log(props,"props profile")
@@ -69,6 +69,9 @@ const Profile = (props) => {
     useEffect(() => {
         checkSubmit()
         props.getUserAction(props.token)
+        if(imageSource!=null){
+            props.editPhotoAction(imageSource,props.token)
+        }
     }, [Email,Username,Password,imageSource])
 
 
@@ -134,7 +137,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     logoutAction,
     getUserAction,
-    editUserAction
+    editUserAction,
+    editPhotoAction
 }
 
 

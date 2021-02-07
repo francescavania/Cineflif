@@ -18,7 +18,7 @@ export const editUserAction = (username,email,passsword,image,token) => {
 };
 
 export const editPhotoAction = (image,token) => {
-    // console.log(username,email,passsword,image,"editUserAction")
+    console.log(image,"editPhotoAction")
     return {
         type: 'EDIT_PHOTO_REQUESTED' ,
         payload: {image,token},

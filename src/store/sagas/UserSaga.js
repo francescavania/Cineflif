@@ -53,17 +53,16 @@ function* editUserSaga({payload}){
 function* editPhotoSaga({payload}){
     try {
         console.log(payload)
-        // const photo = yield API.put(endPoint.updateUser,{
-        //     username:payload.username,
-        //     email:payload.email,
-        // },{
-        //     headers:{
-        //         "Authorization" : "Bearer " + payload.token,
-        //         'Content-Type': 'application/json'
-        //     },
-        // })
-        // console.log(photo,"updatedddd")
-        // yield put({ type: 'GET_USER_SUCCESS', payload:user.data.data});
+        const photo = yield API.post(endPoint.UpdatePhoto,{
+            photo:payload.image
+        },{
+            headers:{
+                "Authorization" : "Bearer " + payload.token,
+                'Content-Type': 'application/json'
+            },
+        })
+        console.log(photo,"updatedddd")
+        // yield put({ type: 'EDIT_PHOTO_SUCCESS', payload:payload});
     } catch (error) {
         console.log(error)
     }

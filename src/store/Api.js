@@ -19,6 +19,7 @@ export const endPoint = {
     getUser: '/api/users/profile',
     loginUser: '/api/users/login',
     updateUser:'/api/users/update',
+    UpdatePhoto:'/api/users/profile/upload',
 
     createReview: '/api/review/create',
     getReviewByUsername: '/api/review/open/user',
