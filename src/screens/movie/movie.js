@@ -21,7 +21,7 @@ import * as RootNavigation from '../../navigation/RootNavigation';
 
 const Movie = (props) => {
     const {navigation, route, MovieDetail,MovieReview} = props
-    // console.log(MovieReview,"MovieReview")
+    console.log(MovieDetail,"MovieDetail")
     
     // const [MovieDetail, setMovieDetail] = useState({});
     // const [MovieReview, setMovieReview] = useState([])
@@ -153,7 +153,7 @@ const Movie = (props) => {
                                     <View style={{paddingBottom:(5),alignItems:'flex-start'}}>
                                         <AirbnbRating
                                             count={5}
-                                            defaultRating={MovieDetail.vote_average/2}
+                                            defaultRating={MovieDetail.totalRating}
                                             showRating={false}
                                             size={15}
                                             isDisabled={true}

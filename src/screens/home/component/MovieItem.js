@@ -4,7 +4,7 @@ import { s, vs, ms } from 'react-native-size-matters';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Colors from '../../../config/Colors';
 import FastImage from 'react-native-fast-image'
-import { Rating } from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-elements';
 import { connect } from 'react-redux'
 import { ActionSelectMovie } from "../../../store/actions/MovieAction";
 
@@ -48,8 +48,17 @@ const MovieItem = (props) => {
                     />
                 </View>
                 <Text numberOfLines={1} style={styles.movieTitle}>{item.title}</Text>
-                <Text numberOfLines={1} style={styles.date}>{item.synopsis}</Text>
-                {/* <Rating imageSize={20} readonly startingValue={item.vote_average/2} /> */}
+                {/* <Text numberOfLines={1} style={styles.date}>{item.synopsis}</Text> */}
+                <View style={{alignSelf:'flex-start',padding:3}}>
+                    <Rating 
+                        type='custom'
+                        imageSize={15} 
+                        readonly 
+                        startingValue={item.totalRating?item.totalRating:0}
+                        ratingBackgroundColor={Colors.gray}
+                        // defaultRating={item.totalRating?item.totalRating:0} 
+                        />
+                </View>
             </TouchableOpacity>
         </View>
     );
