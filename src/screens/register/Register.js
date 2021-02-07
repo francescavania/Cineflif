@@ -52,7 +52,6 @@ const Register = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.form}>
-                    {/* <TextInput value={Name} placeholder='Name' icon='people-alt' onChangeText={(Name) => setName(Name)}/> */}
                     <TextInput value={Username} placeholder='Username' icon='person-add' onChangeText={(Username) => setUsername(Username)}/>
                     <TextInput value={Email} placeholder='Email' icon='mail' onChangeText={(Email) => setEmail(Email)}/>
                     <TextInput value={Password} placeholder='Password' icon='lock' secured={true} onChangeText={(Password) => setPassword(Password)}/>

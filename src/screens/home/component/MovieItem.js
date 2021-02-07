@@ -66,7 +66,7 @@ const MovieItem = (props) => {
         <View style={styles.movieContainer}>
             <FlatList
                 ListHeaderComponent={
-                    <Text style={styles.title}>Hot {genreName} Movie</Text>
+                    <Text style={styles.title}>{genreName}</Text>
                 }
                 showsVerticalScrollIndicator={false}
                 data={Movie}

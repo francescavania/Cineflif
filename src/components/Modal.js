@@ -7,14 +7,15 @@ import Textarea from 'react-native-textarea';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Colors from '../config/Colors';
 import { s, vs, ms } from 'react-native-size-matters';
+import StarRating from 'react-native-star-rating';
 
-export default function Modal({onpress,visible=false,onpressSubmit,onChangeText,onFinishRating}) {
+export default function Modal({onpress,visible=false,onpressSubmit,onChangeText,onFinishRating,rating=0,selectedStar}) {
   return (
     <View>
       <Overlay isVisible={visible} onBackdropPress={onpress}>
           <View>
               <Text style={{alignSelf:'center',fontSize:18}}>How do you think about this movie?</Text>
-                <AirbnbRating  
+                {/* <AirbnbRating  
                 // showRating
                 size={25} 
                 minValue={0} 
@@ -23,7 +24,19 @@ export default function Modal({onpress,visible=false,onpressSubmit,onChangeText,
                 reviews={['1', '2', '3', '4','5']}
                 defaultRating={0}
                 onFinishRating={onFinishRating}
+                /> */}
+              <View style={{width:wp(40),alignSelf:'center',paddingTop:ms(5)}}>
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={rating}
+                  emptyStarColor={Colors.gray}
+                  selectedStar={selectedStar}
+                  fullStarColor={'orange'}
+                  starSize={30}
+                  starStyle={{borderColor:Colors.black}}
                 />
+              </View>
               <View style={styles.container}>
                 <Textarea
                   placeholder={'Write here..'}

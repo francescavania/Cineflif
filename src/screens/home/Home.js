@@ -7,7 +7,6 @@ import GenreList from './component/GenreList';
 import FastImage from 'react-native-fast-image'
 import MovieItem from './component/MovieItem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-// import { SearchBar } from 'react-native-elements';
 import SearchBar from 'react-native-search-bar';
 import { ActionFetchGenre , ActionSearchMovie} from "../../store/actions/MovieAction";
 import { connect } from 'react-redux'
@@ -25,7 +24,6 @@ const Home = (props) => {
     }, [Search])
     
     const navigateToMovie = (id) => {
-        // console.log(id,"id movie select")
         props.navigation.navigate('movie',id)
     }
 
@@ -51,14 +49,6 @@ const Home = (props) => {
                         textColor={Colors.black}
                         onBlur={Keyboard.dismiss}
                     />
-                        {/* <SearchBar
-                            containerStyle={{borderBottomWidth:0,borderTopWidth:0,backgroundColor:Colors.white,padding:0,}}
-                            inputContainerStyle={{backgroundColor:Colors.lightGray,borderRadius:10}}
-                            placeholder="Search"
-                            textColor='black'
-                            onChangeText={(Search) => setSearch(Search)}
-
-                        /> */}
                     </View>
                 </View>
             </View>
@@ -72,7 +62,6 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:Colors.lightGray,
-        // marginBottom:120
     },
     top:{
         paddingHorizontal:ms(8),

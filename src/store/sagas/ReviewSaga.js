@@ -26,7 +26,7 @@ function* fetchUserReview({payload}) {
     try {
         const del = yield API.delete(endPoint.deleteReviewById+reviewId,{
             headers:{
-                "Authorization" : "Bearer " + payload.token,
+                "Authorization" : "Bearer " + token,
                 'Content-Type': 'application/json'
             }
         })

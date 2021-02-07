@@ -34,7 +34,6 @@ const Profile = (props) => {
     
           if (response.didCancel) {
             console.log('User cancelled photo picker');
-            // Alert.alert('You did not select any image');
           } else if (response.error) {
             console.log('ImagePicker Error: ', response.error);
           } else {
@@ -95,7 +94,7 @@ const Profile = (props) => {
                     <View style={styles.form}>
                         <TextInput value={Username==null?props.username:Username} placeholder='Username' icon='people-alt' onChangeText={(Username) => setUsername(Username)}/>
                         <TextInput value={Email==null?props.email:Email} placeholder='Email' icon='people-alt' onChangeText={(Email) => setEmail(Email)}/>
-                        <TextInput value={Password} placeholder='Password' icon='lock' onChangeText={(Password) => setPassword(Password)}/>
+                        <TextInput value={Password} placeholder='Password, tapi blm bisa nih si pass' icon='lock' onChangeText={(Password) => setPassword(Password)}/>
                         <Button value='SUBMIT' backgroundColor='blue' disabled={Disabled} onPress={()=>{
                             handleEditUser()
                             Keyboard.dismiss()}}/>
@@ -112,13 +111,11 @@ const Profile = (props) => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        // backgroundColor:Colors.darkGray
     },
     photo:{
         justifyContent: 'center',
         alignItems: 'center',
         padding:ms(40),
-        // backgroundColor:Colors.lightGray,
         flex:1,
     },
     form:{
@@ -132,7 +129,6 @@ const mapStateToProps = (state) => ({
     username:state.userReducer.username,
     email:state.userReducer.email,
     image:state.userReducer.image,
-    // password : state.authReducer.password,
 })
 
 const mapDispatchToProps = {

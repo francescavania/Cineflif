@@ -15,13 +15,13 @@ export default (state = initialState , action) => {
                 ...state,
                 genres:action.genres.data,
                 selectedGenre : action.genres.data[0]._id,
-                selectedGenreName : action.genres.data[0].genre
+                selectedGenreName : "Hot "+action.genres.data[0].genre+ " Movie"
             }
         case 'MOVIE_FETCH_SUCCEEDED':
             return {
                 ...state,
                 selectedGenre:action.payload.genreId,
-                selectedGenreName:action.payload.genreName,
+                selectedGenreName:"Hot "+action.payload.genreName+ " Movie",
                 movies:action.payload.movies
             }
         case 'MOVIE_DETAIL_FETCH_SUCCEEDED':
@@ -32,8 +32,7 @@ export default (state = initialState , action) => {
         case 'SEARCH_MOVIE_FETCH_SUCCEEDED':
             return {
                 ...state,
-                movies:action.movie,
-                selectedGenreName: "-"
+                movies:action.movie
             }
         case 'MOVIE_REVIEW_SUCCEEDED':
             return {

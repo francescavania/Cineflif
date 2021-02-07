@@ -22,9 +22,6 @@ import * as RootNavigation from '../../navigation/RootNavigation';
 const Movie = (props) => {
     const {navigation, route, MovieDetail,MovieReview} = props
     console.log(MovieDetail,"MovieDetail")
-    
-    // const [MovieDetail, setMovieDetail] = useState({});
-    // const [MovieReview, setMovieReview] = useState([])
 
     const [customStyleIndex, setCustomStyleIndex] = useState(0);
     const [ReadMore,setReadMore]=useState(false);
@@ -37,23 +34,11 @@ const Movie = (props) => {
     const toggleOverlay = () => {
         setVisible(!visible);
       };
-
-    async function fetchReview(){
-        try {
-            const res = await axios.get('https://api.themoviedb.org/3/movie/464052/reviews?api_key=781eb13279207d3b00115859616b4710&language=en-US&page=1')
-            setMovieReview(res.data.results)
-            // setAwal()
-        } catch (error) {
-            console.log(error)
-        }
-        
-    }
     
     useEffect(() => {
         props.ActionSelectMovie(route.params)
         if(props.token != ''){
             props.ActionGetMovieReview(MovieDetail._id,props.token)
-            // fetchReview();
         }
     }, [MovieDetail._id]);
     
@@ -62,10 +47,6 @@ const Movie = (props) => {
         setCustomStyleIndex(index);
     };
 
-
-    // const renderReview = ({ item, index }) =>{
-    //     console.log("masuk sini")
-    // }
     const renderReview = ({ item, index }) =>(
         <View style={{backgroundColor:Colors.white,marginTop:5}}>
             <View style={{paddingHorizontal:ms(10)}}>
@@ -204,7 +185,14 @@ const Movie = (props) => {
                     </View>
                 )}
             </View>
-            <Modal onpress={toggleOverlay} visible={visible} onFinishRating={onFinishRating}/>
+            <Modal 
+                onpress={toggleOverlay} 
+                visible={visible} 
+                onFinishRating={onFinishRating}
+                onpressSubmit={()=>{}}
+                onChangeText={()=>{}}
+                selectedStar={()=>{}}
+            />
         </View>
         
     )

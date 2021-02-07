@@ -14,6 +14,7 @@ function* loginSaga({payload}){
         })
         yield put({ type: 'LOGIN_SUCCESS', payload:{response,username:payload.username}});
     } catch (error) {
+        Alert.alert('Salah kali')
         console.log(error)
         // yield put({ type: 'LOGIN_ERROR', error });
     }
