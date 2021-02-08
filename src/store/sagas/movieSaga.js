@@ -81,6 +81,8 @@ function* fetchMoviewReview({payload}) {
             const payload = {payload:{movieId:movieId,token:token}}
             console.log(payload,"payload mau di kirim")
             yield call(fetchMoviewReview,payload)
+            yield call(fetchUserReview,token)
+            // yield put({type: "GET_REVIEW_REQUESTED", token});
         }
         // if(review.status == 200){
         //     const payload = {movieId:payload.movieId,token:payload.token}
@@ -88,6 +90,21 @@ function* fetchMoviewReview({payload}) {
         //     yield call(fetchMoviewReview,payload)
         // }
             // yield put({type: "MOVIE_REVIEW_SUCCEEDED", movie:movie.data.data});
+    } catch (e) {
+        console.log(e)
+    }
+ }
+
+ function* fetchUserReview(payload) {
+    try {
+        const reviews = yield API.get(endPoint.getReviewByUsername,{
+            headers:{
+                "Authorization" : "Bearer " + payload,
+                'Content-Type': 'application/json'
+            }
+        })
+        // yield console.log(reviews,"reviews")
+        yield put({type: "REVIEW_FETCH_SUCCEEDED", reviews:reviews.data.data});
     } catch (e) {
         console.log(e)
     }
