@@ -14,22 +14,23 @@ import Modal from '../../components/Modal';
 import { useSelector } from "react-redux";
 import Login from "../login/Login";
 import { connect } from 'react-redux'
-import { ActionSelectMovie, ActionGetMovieReview } from "../../store/actions/MovieAction";
+import { ActionSelectMovie, ActionGetMovieReview, ActionAddReview } from "../../store/actions/MovieAction";
 import { TextButton } from '../../components';
 import * as RootNavigation from '../../navigation/RootNavigation';
 
 
 const Movie = (props) => {
     const {navigation, route, MovieDetail,MovieReview} = props
-    console.log(MovieDetail,"MovieDetail")
+    // console.log(MovieDetail,"MovieDetail")
 
     const [customStyleIndex, setCustomStyleIndex] = useState(0);
-    const [ReadMore,setReadMore]=useState(false);
+    // const [ReadMore,setReadMore]=useState(false);
     const [visible, setVisible] = useState(false);
-    const [readMoreId, setreadMoreId] = useState(0)
+    // const [readMoreId, setreadMoreId] = useState(0)
     // const [TotalReview, setTotalReview] = useState(0)
     const [lines, setLines] = useState(Array(MovieReview.length).fill('hide'));
     const [Rating, setRating] = useState(0)
+    const [TextReview, setTextReview] = useState('')
 
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -90,10 +91,10 @@ const Movie = (props) => {
         </View>
     )
 
-    const onFinishRating = (rating)=>{
-        setRating(rating)
-        console.log(Rating)
-    }
+    // const onFinishRating = (rating)=>{
+    //     setRating(rating)
+    //     console.log(Rating)
+    // }
 
 
     return (
@@ -188,10 +189,14 @@ const Movie = (props) => {
             <Modal 
                 onpress={toggleOverlay} 
                 visible={visible} 
-                onFinishRating={onFinishRating}
-                onpressSubmit={()=>{}}
-                onChangeText={()=>{}}
-                selectedStar={()=>{}}
+                // onFinishRating={onFinishRating}
+                onpressSubmit={()=>{props.ActionAddReview(MovieDetail._id,Rating,TextReview,props.token)
+                    toggleOverlay()}}
+                onChangeText={(text)=>{
+                    setTextReview(text)}}
+                rating={Rating}
+                selectedStar={(rating)=>{setRating(rating)
+                    console.log(rating,"Rating")}}
             />
         </View>
         
@@ -237,7 +242,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     ActionSelectMovie,
-    ActionGetMovieReview
+    ActionGetMovieReview,
+    ActionAddReview
 }
 
 export default connect(

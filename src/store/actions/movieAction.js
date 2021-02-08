@@ -40,6 +40,14 @@ export const ActionSearchMovie = (search) => {
   };
 };
 
+export const ActionAddReview = (movieId,rating,review,token) => {
+  console.log(movieId,rating,review,token,"movieId,rating,review,token")
+  return {
+    type: 'ADD_REVIEW_REQUESTED',
+    payload:{movieId,rating,review,token},
+  };
+};
+
 // export const ActionGetMovieById = (movieId) => {
 //   return {
 //     type: SELECT_MOVIE_REQUESTED,
