@@ -7,7 +7,7 @@
 
 [![React Native](https://img.shields.io/badge/react%20native-v0.63.4-blue)](https://facebook.github.io/react-native/)
 
-<p align='justify'>Cineflix is a movie reviews applications. Where users can give ratings and reviews. This app was build with React native
+<p align='justify'>Cineflix is a movie reviews applications. Where users can give ratings and reviews. This app was built with React native
 
 </p>
 
