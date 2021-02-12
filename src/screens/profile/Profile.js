@@ -97,7 +97,7 @@ const Profile = (props) => {
                     <View style={styles.form}>
                         <TextInput value={Username==null?props.username:Username} placeholder='Username' icon='people-alt' onChangeText={(Username) => setUsername(Username)}/>
                         <TextInput value={Email==null?props.email:Email} placeholder='Email' icon='people-alt' onChangeText={(Email) => setEmail(Email)}/>
-                        <TextInput value={Password} placeholder='Password, tapi blm bisa nih si pass' icon='lock' onChangeText={(Password) => setPassword(Password)}/>
+                        <TextInput value={Password} placeholder='Password' icon='lock' onChangeText={(Password) => setPassword(Password)}/>
                         <Button value='SUBMIT' backgroundColor='blue' disabled={Disabled} onPress={()=>{
                             handleEditUser()
                             Keyboard.dismiss()}}/>

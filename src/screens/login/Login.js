@@ -95,13 +95,11 @@ export default connect(
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        // backgroundColor:Colors.darkGray
     },
     logo:{
         justifyContent: 'center',
         alignItems: 'center',
         padding:s(40),
-        // backgroundColor:Colors.lightGray,
         flex:1,
     },
     form:{
