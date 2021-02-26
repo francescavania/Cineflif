@@ -20,5 +20,6 @@
 ## Screenshot from the App
 
 <p align='center'>
-  ![Screenshoot](/src/assets/images/app.png)
+  
+  <img src="/src/assets/images/app.png">
 </p>
