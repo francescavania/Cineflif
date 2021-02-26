@@ -20,5 +20,5 @@
 ## Screenshot from the App
 
 <p align='center'>
-  ![screenshoot](https://raw.githubusercontent.com/francescavania/Cineflix/main/src/assets/images/app.png)
+  ![Screenshoot](/src/assets/images/app.png)
 </p>
