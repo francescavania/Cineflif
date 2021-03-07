@@ -11,6 +11,12 @@
 
 </p>
 
+## Built With
+* React Native
+* Redux Saga
+* Redux Persist
+* Axios
+
 ## Requirements
 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
